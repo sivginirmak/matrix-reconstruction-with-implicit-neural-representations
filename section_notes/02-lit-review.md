@@ -7,20 +7,25 @@ Recent work on INRs has demonstrated their effectiveness in representing complex
 Traditional matrix completion methods, including nuclear norm minimization and collaborative filtering, provide important baselines. However, these approaches often struggle with capturing complex patterns and typically require storing the full matrix dimensions explicitly.
 
 ## Key Papers
+
 ### Paper Title 1
-- **Contribution:** Main finding and contribution
-- **Points:** Core points made by this work
-- **Gap:** What is missing or could be improved
+
+* **Contribution:** Main finding and contribution
+* **Points:** Core points made by this work
+* **Gap:** What is missing or could be improved
 
 ### Paper Title 2
-- **Contribution:** Main finding and contribution
-- **Points:** Core points made by this work
-- **Gap:** What is missing or could be improved
+
+* **Contribution:** Main finding and contribution
+* **Points:** Core points made by this work
+* **Gap:** What is missing or could be improved
 
 ## Common Points Across Literature
+
 1. Most common point across papers
 2. Another prevalent point in the field
 
 ## Our Position
-- **Challenges:** Which assumptions we are questioning, if any
-- **Builds on:** Which prior work we extend
+
+* **Challenges:** Which assumptions we are questioning, if any
+* **Builds on:** Which prior work we extend
