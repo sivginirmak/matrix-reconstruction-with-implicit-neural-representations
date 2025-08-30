@@ -1,3 +1,5 @@
+Please update based on this main idea:
+
 The main idea is comparing 2D fitting performances of (normally 3D) INRs such as K-Planes, GA-Planes, NeRF etc. I had done some initial experiments in my paper (mostly to complement the theory). Since everything is based on 2D reconstruction, any open-source image dataset can be used & it is cpu-friendly.
 
  [https://arxiv.org/pdf/2506.11139](https://arxiv.org/pdf/2506.11139)
