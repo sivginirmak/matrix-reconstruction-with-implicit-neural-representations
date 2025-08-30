@@ -16,7 +16,7 @@ This investigation addresses three critical gaps in current literature:
 
 ### Primary Hypothesis
 
-**Planar factorization methods (K-Planes) will demonstrate superior parameter efficiency and reconstruction quality compared to traditional MLP-based approaches (NeRF) for 2D matrix reconstruction, due to their explicit geometric bias toward planar structures inherent in 2D data.**
+**Planar factorization methods (K-Planes) will demonstrate superior reconstruction quality compared to traditional MLP-based approaches (NeRF) for 2D matrix reconstruction, due to their explicit geometric bias toward planar structures inherent in 2D data.**
 
 ### Critical Assumptions Being Tested
 
