@@ -11,7 +11,7 @@ The main idea is comparing 2D fitting performances of (normally 3D) INRs such as
 * Nonconvex vs convex decoders
 * effect of interpolation
 
-
+\---
 
 # Research Concept & Direction
 
