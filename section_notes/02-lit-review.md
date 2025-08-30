@@ -15,11 +15,7 @@ These resources:
 * Nonconvex vs convex decoders
 * effect of interpolation
 
-
-
 \---
-
-
 
 # Literature Review
 
