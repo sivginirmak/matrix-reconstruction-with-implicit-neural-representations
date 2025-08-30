@@ -30,5 +30,5 @@ Describe how you will test your hypothesis and validate your claims.
 
 ## Success Metrics
 
-- Primary metric and target threshold
-- Secondary metric and target threshold
+* Primary metric and target threshold
+* Secondary metric and target threshold
