@@ -58,6 +58,7 @@ This literature review examines the intersection of **Implicit Neural Representa
 - **SVD-based factorization** M = UΣV^T with regularization
 - **Scalability issues** and cold-start problems
 
+
 ### 4. Recent INR Reconstruction Applications
 
 #### Medical Imaging and Sparse Reconstruction
