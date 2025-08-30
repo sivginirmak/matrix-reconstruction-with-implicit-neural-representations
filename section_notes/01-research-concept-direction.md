@@ -1,8 +1,6 @@
 The main idea is comparing 2D fitting performances of (normally 3D) INRs such as K-Planes, GA-Planes, NeRF etc. I had done some initial experiments in my paper (mostly to complement the theory). Since everything is based on 2D reconstruction, any open-source image dataset can be used & it is cpu-friendly.
 
- 
-
-[https://arxiv.org/pdf/2506.11139](https://arxiv.org/pdf/2506.11139)
+ [https://arxiv.org/pdf/2506.11139](https://arxiv.org/pdf/2506.11139)
 
 [https://openaccess.thecvf.com/content/CVPR2023/papers/Fridovich-Keil\_K-Planes\_Explicit\_Radiance\_Fields\_in\_Space\_Time\_and\_Appearance\_CVPR\_2023\_paper.pdf](https://openaccess.thecvf.com/content/CVPR2023/papers/Fridovich-Keil_K-Planes_Explicit_Radiance_Fields_in_Space_Time_and_Appearance_CVPR_2023_paper.pdf)
 
