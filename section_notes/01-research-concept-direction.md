@@ -1,3 +1,5 @@
+
+
 Please update based on this main idea and references:
 
 The main idea is comparing 2D fitting performances of (normally 3D) INRs such as K-Planes, GA-Planes, NeRF etc. I had done some initial experiments in my paper (mostly to complement the theory). Since everything is based on 2D reconstruction, any open-source image dataset can be used & it is cpu-friendly.
@@ -45,3 +47,4 @@ Describe how you will test your hypothesis and validate your claims.
 
 * Primary metric and target threshold
 * Secondary metric and target threshold
+
