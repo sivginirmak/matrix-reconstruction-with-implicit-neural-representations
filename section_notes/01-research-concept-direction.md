@@ -1,4 +1,4 @@
-# # Research Concept & Direction: Comparative Analysis of INR Architectures for 2D Matrix Reconstruction
+\# Research Concept & Direction: Comparative Analysis of INR Architectures for 2D Matrix Reconstruction
 
 
 
