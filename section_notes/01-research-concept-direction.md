@@ -44,7 +44,7 @@ Proving this hypothesis will reshape the field by:
 
 **Phase 1: Architecture Comparison**
 
-* Systematic evaluation of K-Planes vs. GA-Planes (geometric algebra planes) NeRF vs. Gaussian-based methods on standardized 2D reconstruction tasks
+* Systematic evaluation of K-Planes vs. GA-Planes (geometric algebra planes) vs. NeRF vs. Gaussian-based methods on standardized 2D reconstruction tasks
 * Controlled comparison with identical training protocols and evaluation metrics
 
 **Phase 2: Component Analysis**
