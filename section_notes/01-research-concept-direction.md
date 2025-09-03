@@ -45,7 +45,10 @@ Proving this hypothesis will reshape the field by:
 **Phase 1: Architecture Comparison**
 
 * Systematic evaluation of K-Planes vs. GA-Planes (geometric algebra planes) vs. NeRF (with ReLU vs sinusoidal activations (siren)) vs. Gaussian-splats on standardized 2D reconstruction tasks
-* K-planes with MLP decoder  in 2D is like: MLP(f\_u\*f\_v) where f\_u, f\_v are line features. GA-planes: MLP(f\_u (times or concat or add) f\_v (add or concat) f\_uv) where f\_uv is low-res plane feature (all features are up
+* K-planes with MLP decoder  in 2D is like: MLP(f\_u\*f\_v) where f\_u, f\_v are line features. GA-planes: MLP(f\_u (times or concat or add) f\_v (add or concat) f\_uv) where f\_uv is low-res plane feature (all features are upsampled by interpolation)
+* comparison of convex vs nonconvex MLPs
+* addition of quantization: MLP(quant(f\_u)...) -- try doing QAT
+*
 * Controlled comparison with identical training protocols and evaluation metrics
 
 **Phase 2: Component Analysis**
@@ -56,7 +59,6 @@ Proving this hypothesis will reshape the field by:
 
 **Phase 3: Domain-Specific Optimization**
 
-* 2D-optimized architectural variants
 * CPU-friendly implementations leveraging 2D computational advantages
 
 ### Validation Strategy
