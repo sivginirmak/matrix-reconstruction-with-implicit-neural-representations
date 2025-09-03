@@ -88,7 +88,7 @@ Proving this hypothesis will reshape the field by:
 
 ## Success Metrics
 
-* **Primary Metric**: PSNR improvement >5dB over baseline methods (target: >35dB)
+* **Primary Metric**: PSNR improvement >5dB over baseline methods (target: >35dB) # baseline could be S
 * **Secondary Metric**: Parameter efficiency improvement >2x (fewer parameters for equivalent quality)
 * **Tertiary Metric**: Training time reduction >50% compared to 3D-optimized implementations
 
