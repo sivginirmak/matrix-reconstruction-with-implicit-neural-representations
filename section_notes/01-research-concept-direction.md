@@ -22,7 +22,7 @@ This investigation addresses three critical gaps in current literature:
 
 The literature implicitly assumes several points that our research directly challenges:
 
-1. **Assumption**: "Complex model architectures are necessary for high-quality continuous representations"&#x20;
+1. **Assumption**: "Complex model architectures are necessary for high-quality continuous representations" # this is not necessarily the assumption of the 3D reconstruction papers, they also try to simplify the model to constrain the reconstructions as the problem is inherently ill-posed
    * **Our Challenge**: 2D matrix reconstruction may benefit more from simpler, geometrically-informed architectures
 2. **Assumption**: "Nonlinear MLP decoders are essential for expressive neural fields"
    * **Our Challenge**: Linear decoders with appropriate factorization may achieve comparable performance with better interpretability
