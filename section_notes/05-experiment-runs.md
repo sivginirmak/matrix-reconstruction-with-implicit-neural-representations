@@ -1,6 +1,6 @@
 Run experiment!&#x20;
 
-Use experimen
+Use experiments/some\_e
 
 # Experiment Runs
 
