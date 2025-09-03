@@ -45,7 +45,7 @@ Proving this hypothesis will reshape the field by:
 **Phase 1: Architecture Comparison**
 
 * Systematic evaluation of K-Planes vs. GA-Planes (geometric algebra planes) vs. NeRF (with ReLU vs sinusoidal activations (siren)) vs. Gaussian-splats on standardized 2D reconstruction tasks
-* K-planes with MLP decoder  in 2D is like: MLP(f\_u\*f\_v) where u,v are line features. GA-planes: MLP(u (times or concat or add) v (add or concat)&#x20;
+* K-planes with MLP decoder  in 2D is like: MLP(u\*v) where u,v are line features. GA-planes: MLP(u (times or concat or add) v (add or concat)&#x20;
 * Controlled comparison with identical training protocols and evaluation metrics
 
 **Phase 2: Component Analysis**
