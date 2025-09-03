@@ -13,16 +13,16 @@
 **Research Hypothesis:** K-Planes architecture will outperform NeRF and Gaussian-based methods for 2D matrix reconstruction due to explicit planar factorization.
 
 * **Objective:** Test the core hypothesis that planar factorization methods achieve superior reconstruction quality for 2D matrices
-* **Independent Variables:** 
-  - Architecture type (K-Planes, NeRF, 3D Gaussian Splatting adapted to 2D)
-  - Matrix resolution (64x64, 128x128, 256x256)
-  - Sparsity level (10%, 25%, 50%, 75% missing data)
+* **Independent Variables:**
+  * Architecture type (K-Planes, NeRF, 3D Gaussian Splatting adapted to 2D)
+  * Matrix resolution (64x64, 128x128, 256x256)
+  * Sparsity level (10%, 25%, 50%, 75% missing data)
 * **Dependent Variables:**
-  - Peak Signal-to-Noise Ratio (PSNR) [Target: >35dB]
-  - Structural Similarity Index (SSIM) [Target: >0.95]
-  - Parameter count and memory usage
-  - Training convergence time
-* **Method:** 
+  * Peak Signal-to-Noise Ratio (PSNR) \[Target: >35dB]
+  * Structural Similarity Index (SSIM) \[Target: >0.95]
+  * Parameter count and memory usage
+  * Training convergence time
+* **Method:**
   1. Generate synthetic 2D matrices from known continuous functions (sinusoids, Gaussians, polynomial surfaces)
   2. Create sparse observations with controlled missing data patterns
   3. Train each architecture with identical hyperparameters and training protocols
@@ -38,14 +38,14 @@
 
 * **Objective:** Challenge the assumption that nonlinear MLP decoders are essential for expressive neural fields
 * **Independent Variables:**
-  - Decoder type (Linear, 2-layer MLP, 4-layer MLP, SIREN activation)
-  - Factorization scheme (planar, tensor, low-rank)
-  - Hidden dimension size (64, 128, 256)
+  * Decoder type (Linear, 2-layer MLP, 4-layer MLP, SIREN activation)
+  * Factorization scheme (planar, tensor, low-rank)
+  * Hidden dimension size (64, 128, 256)
 * **Dependent Variables:**
-  - Reconstruction quality (PSNR, SSIM)
-  - Parameter efficiency (PSNR per parameter)
-  - Training stability (gradient variance)
-  - Inference speed (ms per reconstruction)
+  * Reconstruction quality (PSNR, SSIM)
+  * Parameter efficiency (PSNR per parameter)
+  * Training stability (gradient variance)
+  * Inference speed (ms per reconstruction)
 * **Method:**
   1. Implement K-Planes architecture with different decoder variants
   2. Test on standardized 2D reconstruction benchmarks
@@ -59,13 +59,13 @@
 
 * **Objective:** Test the assumption that positional encoding strategies optimal for 3D scenes transfer directly to 2D domains
 * **Independent Variables:**
-  - Encoding type (Fourier features, SIREN, K-Planes native, learned embeddings)
-  - Frequency range and sampling (low, medium, high frequency emphasis)
-  - Encoding dimension (32, 64, 128)
+  * Encoding type (Fourier features, SIREN, K-Planes native, learned embeddings)
+  * Frequency range and sampling (low, medium, high frequency emphasis)
+  * Encoding dimension (32, 64, 128)
 * **Dependent Variables:**
-  - Convergence speed (epochs to target PSNR)
-  - Final reconstruction quality
-  - Spectral bias (frequency response analysis)
+  * Convergence speed (epochs to target PSNR)
+  * Final reconstruction quality
+  * Spectral bias (frequency response analysis)
 * **Method:**
   1. Implement each encoding scheme within identical architecture
   2. Test on matrices with varying frequency content
@@ -79,13 +79,13 @@
 
 * **Objective:** Assess architectural robustness to real-world data corruption scenarios
 * **Independent Variables:**
-  - Missing data pattern (random, block-wise, stripe patterns, edge corruption)
-  - Noise level (σ ∈ [0, 0.1, 0.05, 0.1] Gaussian noise)
-  - Matrix content type (smooth, textured, high-frequency)
+  * Missing data pattern (random, block-wise, stripe patterns, edge corruption)
+  * Noise level (σ ∈ \[0, 0.1, 0.05, 0.1] Gaussian noise)
+  * Matrix content type (smooth, textured, high-frequency)
 * **Dependent Variables:**
-  - Reconstruction quality under corruption
-  - Graceful degradation curves
-  - Uncertainty quantification accuracy
+  * Reconstruction quality under corruption
+  * Graceful degradation curves
+  * Uncertainty quantification accuracy
 * **Method:**
   1. Create systematic corruption scenarios
   2. Test each architecture's robustness
@@ -98,46 +98,43 @@
 ### Architecture Component Ablations
 
 * **K-Planes Factorization:**
-  - Remove planar factorization → Expected: 10-15dB PSNR drop, validates core hypothesis
-  - Vary number of planes (1, 2, 4 planes) → Expected: performance plateau at 2 planes for 2D
-  - Modify interpolation scheme → Expected: bilinear sufficient vs learned interpolation
-
+  * Remove planar factorization → Expected: 10-15dB PSNR drop, validates core hypothesis
+  * Vary number of planes (1, 2, 4 planes) → Expected: performance plateau at 2 planes for 2D
+  * Modify interpolation scheme → Expected: bilinear sufficient vs learned interpolation
 * **Positional Encoding:**
-  - Remove positional encoding → Expected: severe high-frequency loss
-  - Reduce encoding dimension → Expected: smooth degradation in detail reconstruction
-  - Modify frequency range → Expected: spectral bias shifts
-
+  * Remove positional encoding → Expected: severe high-frequency loss
+  * Reduce encoding dimension → Expected: smooth degradation in detail reconstruction
+  * Modify frequency range → Expected: spectral bias shifts
 * **Training Dynamics:**
-  - Learning rate scheduling → Expected: significant impact on convergence
-  - Loss function variants (L1, L2, perceptual) → Expected: L2 optimal for PSNR metrics
+  * Learning rate scheduling → Expected: significant impact on convergence
+  * Loss function variants (L1, L2, perceptual) → Expected: L2 optimal for PSNR metrics
 
 ### Hyperparameter Sensitivity Analysis
 
 * **Network Architecture:**
-  - Hidden dimensions: [32, 64, 128, 256] → Expected: diminishing returns after 128
-  - Depth: [2, 4, 6, 8 layers] → Expected: 4 layers optimal for 2D complexity
-
+  * Hidden dimensions: \[32, 64, 128, 256] → Expected: diminishing returns after 128
+  * Depth: \[2, 4, 6, 8 layers] → Expected: 4 layers optimal for 2D complexity
 * **Training Parameters:**
-  - Batch size: [16, 64, 256] → Expected: larger batches improve stability
-  - Learning rate: [1e-4, 1e-3, 1e-2] → Expected: 1e-3 optimal with proper scheduling
+  * Batch size: \[16, 64, 256] → Expected: larger batches improve stability
+  * Learning rate: \[1e-4, 1e-3, 1e-2] → Expected: 1e-3 optimal with proper scheduling
 
 ## Baseline Comparisons
 
 ### Traditional Matrix Completion Methods
 
-* **Nuclear Norm Minimization (NNLS):** Expected PSNR ~25dB on synthetic data
-* **Alternating Least Squares (ALS):** Expected PSNR ~28dB, fast convergence
-* **Bayesian Matrix Factorization:** Expected PSNR ~30dB with uncertainty quantification
+* **Nuclear Norm Minimization (NNLS):** Expected PSNR \~25dB on synthetic data
+* **Alternating Least Squares (ALS):** Expected PSNR \~28dB, fast convergence
+* **Bayesian Matrix Factorization:** Expected PSNR \~30dB with uncertainty quantification
 
 ### Deep Learning Baselines
 
-* **Autoencoder-based completion:** Expected PSNR ~32dB, requires training data
-* **CNN-based inpainting:** Expected PSNR ~30dB, good for local patterns
-* **Graph Neural Networks:** Expected PSNR ~29dB for structured sparsity
+* **Autoencoder-based completion:** Expected PSNR \~32dB, requires training data
+* **CNN-based inpainting:** Expected PSNR \~30dB, good for local patterns
+* **Graph Neural Networks:** Expected PSNR \~29dB for structured sparsity
 
 ### INR-specific Baselines
 
-* **Standard NeRF (MLP-based):** Reference baseline, expected PSNR ~30-32dB
+* **Standard NeRF (MLP-based):** Reference baseline, expected PSNR \~30-32dB
 * **SIREN:** Expected similar to NeRF but faster convergence
 * **Fourier Feature Networks:** Expected good high-frequency reconstruction
 
@@ -146,15 +143,14 @@
 ### Dataset Generation
 
 * **Synthetic Functions:**
-  - Smooth: Gaussian mixtures, polynomial surfaces
-  - Textured: Perlin noise, fractal patterns  
-  - Structured: Checkerboards, concentric patterns
-  - Natural: Downsampled natural images as ground truth
-
+  * Smooth: Gaussian mixtures, polynomial surfaces
+  * Textured: Perlin noise, fractal patterns
+  * Structured: Checkerboards, concentric patterns
+  * Natural: Downsampled natural images as ground truth
 * **Evaluation Matrices:**
-  - Resolution range: 64×64 to 512×512
-  - Dynamic range: [0,1] normalized
-  - 1000 test matrices per category
+  * Resolution range: 64×64 to 512×512
+  * Dynamic range: \[0,1] normalized
+  * 1000 test matrices per category
 
 ### Evaluation Metrics
 
@@ -179,15 +175,15 @@
 
 ### Should Have (Strengthens Claims)
 
-4. **Positional encoding comparison:** Optimizes 2D-specific components
-5. **Parameter efficiency analysis:** Demonstrates practical advantages
-6. **Statistical significance validation:** Ensures reproducible results
+1. **Positional encoding comparison:** Optimizes 2D-specific components
+2. **Parameter efficiency analysis:** Demonstrates practical advantages
+3. **Statistical significance validation:** Ensures reproducible results
 
 ### Nice to Have (Extends Understanding)
 
-7. **Advanced robustness scenarios:** Real-world applicability
-8. **Computational profiling:** Performance optimization insights
-9. **Interpretability analysis:** Understanding learned representations
+1. **Advanced robustness scenarios:** Real-world applicability
+2. **Computational profiling:** Performance optimization insights
+3. **Interpretability analysis:** Understanding learned representations
 
 ## Resource Requirements
 
