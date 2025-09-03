@@ -67,7 +67,7 @@ Proving this hypothesis will reshape the field by:
 **Metrics**:
 
 * Primary: Peak Signal-to-Noise Ratio (PSNR) with target >35dB
-* Secondary: Parameter efficiency (parameters per reconstruction quality unit) (compare size vs. psnr
+* Secondary: Parameter efficiency (parameters per reconstruction quality unit) (compare size vs. psnr)
 * Tertiary: Training time and computational requirements
 
 **Standards of Evidence**: Following ML field standards with:
