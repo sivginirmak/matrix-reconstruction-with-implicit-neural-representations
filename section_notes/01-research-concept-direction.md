@@ -26,14 +26,14 @@ The literature implicitly assumes several points that our research directly chal
    * **Our Challenge**: 2D matrix reconstruction may benefit more from simpler, geometrically-informed architectures
 2. **Assumption**: "Nonlinear MLP decoders are essential for expressive neural fields"
    * **Our Challenge**: Linear decoders with appropriate factorization may achieve comparable performance with better interpretability # also papers like K-Planes compare linear vs MLP decoder performances. GA-Planes compares convex vs nonconvex MLP decoders
-3. **Assumption**: "Positional encoding strategies optimal for 3D scenes transfer directly to 2D domains" # ı haven't seen a paper s
+3. **Assumption**: "Positional encoding strategies optimal for 3D scenes transfer directly to 2D domains" # I haven't seen a paper claiming this
    * **Our Challenge**: 2D-specific encoding strategies may be more effective than high-dimensional adaptations
 
 ### Expected Literature-Level Impact
 
 Proving this hypothesis will reshape the field by:
 
-1. **Establishing 2D-specific design principles** for INR architectures, moving beyond 3D-centric thinking
+1. **Establishing 2D-specific design principles** for INR architectures, moving beyond 3D-centric thinking # there is some work with 2D gaussian sp
 2. **Demonstrating architectural transferability** between domains, opening new research directions
 3. **Providing efficiency benchmarks** that could influence future INR design decisions
 4. **Validating explicit geometric priors** as alternatives to purely implicit representations
