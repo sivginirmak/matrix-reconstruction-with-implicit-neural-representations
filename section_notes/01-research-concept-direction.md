@@ -33,10 +33,10 @@ The literature implicitly assumes several points that our research directly chal
 
 Proving this hypothesis will reshape the field by:
 
-1. **Establishing 2D-specific design principles** for INR architectures, moving beyond 3D-centric thinking # there is some work with 2D gaussian sp
+1. **Establishing 2D-specific design principles** for INR architectures, moving beyond 3D-centric thinking # there is some work on 2D gaussian splats
 2. **Demonstrating architectural transferability** between domains, opening new research directions
-3. **Providing efficiency benchmarks** that could influence future INR design decisions
-4. **Validating explicit geometric priors** as alternatives to purely implicit representations
+3. **Providing efficiency benchmarks** that could influence future INR design decisions # I think this would be the most valuable
+4. **Validating explicit geometric priors** as alternatives to purely implicit representations # not sure if there's a difference between doing that in 2D vs 3D
 
 ## Systematic Research Approach
 
@@ -44,7 +44,7 @@ Proving this hypothesis will reshape the field by:
 
 **Phase 1: Architecture Comparison**
 
-* Systematic evaluation of K-Planes vs. NeRF vs. Gaussian-based methods on standardized 2D reconstruction tasks
+* Systematic evaluation of K-Planes vs. GA-Planes (geometric algebra planes) NeRF vs. Gaussian-based methods on standardized 2D reconstruction tasks
 * Controlled comparison with identical training protocols and evaluation metrics
 
 **Phase 2: Component Analysis**
