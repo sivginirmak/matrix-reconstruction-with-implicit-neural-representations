@@ -48,8 +48,8 @@ Proving this hypothesis will reshape the field by:
 * K-planes with MLP decoder  in 2D is like: MLP(f\_u\*f\_v) where f\_u, f\_v are line features. GA-planes: MLP(f\_u (times or concat or add) f\_v (add or concat) f\_uv) where f\_uv is low-res plane feature (all features are upsampled by interpolation)
 * comparison of convex vs nonconvex MLPs
 * addition of quantization: MLP(quant(f\_u)...) -- try doing QAT
-* with/without interpolation: can compare MLP(U@V) vs SVD fitting U@V in the no interpolation case
-* Controlled comparison with identical training protocols and evaluation metrics #you can break these up
+* with/without interpolation: can compare&#x20;
+* Controlled comparison with identical training protocols and evaluation metrics
 
 **Phase 2: Component Analysis**
 
@@ -66,8 +66,8 @@ Proving this hypothesis will reshape the field by:
 **Datasets**: Open-source image datasets (providing ground truth for 2D matrix reconstruction)
 **Metrics**:
 
-* Primary: Peak Signal-to-Noise Ratio (PSNR)&#x20;
-* Secondary: Parameter efficiency (parameters per reconstruction quality unit) (compare size vs. psnr)
+* Primary: Peak Signal-to-Noise Ratio (PSNR) with target >35dB
+* Secondary: Parameter efficiency (parameters per reconstruction quality unit)
 * Tertiary: Training time and computational requirements
 
 **Standards of Evidence**: Following ML field standards with:
@@ -88,7 +88,7 @@ Proving this hypothesis will reshape the field by:
 
 ## Success Metrics
 
-* **Primary Metric**: PSNR improvement >5dB over baseline methods (target: >35dB) # baseline could be S
+* **Primary Metric**: PSNR improvement >5dB over baseline methods (target: >35dB)
 * **Secondary Metric**: Parameter efficiency improvement >2x (fewer parameters for equivalent quality)
 * **Tertiary Metric**: Training time reduction >50% compared to 3D-optimized implementations
 
@@ -98,24 +98,3 @@ Proving this hypothesis will reshape the field by:
 2. **NeRF** (Mildenhall et al., ECCV 2020): Foundation work on continuous 5D neural radiance fields with MLP architectures
 3. **Author's Prior Work** (https://arxiv.org/pdf/2506.11139): Initial experiments complementing theoretical foundations
 4. **SIREN vs. Fourier Features**: Comparative analysis of positional encoding strategies for continuous representations
-
-## Research Methodology Notes
-
-Following the established research methodology:
-
-### Hypothesis Structure (∃ X + X > Y)
-
-* **∃ X**: It's possible to construct effective 2D-specialized INR architectures
-* **X > Y**: These 2D-optimized architectures outperform direct 3D→2D adaptations
-
-### Literature Points Identified
-
-1. **Planar factorization efficiency** spans K-Planes and related work
-2. **Decoder architecture trade-offs** spans NeRF, SIREN, and recent explicit methods
-3. **Domain transfer assumptions** implicit across multiple INR papers
-
-### Research Risk Assessment
-
-* **Highest Risk**: Architectural differences may be too subtle to detect in 2D domain
-* **Mitigation**: Focus on clear parameter efficiency and computational speed metrics
-* **Validation Strategy**: Multiple datasets and statistical significance testing
