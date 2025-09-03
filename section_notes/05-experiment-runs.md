@@ -1,6 +1,6 @@
 Run experiment!&#x20;
 
-Use experiments/some\_examples.py as reference for code implementation
+Use experiments/some\_exam
 
 # Experiment Runs
 
