@@ -1,6 +1,6 @@
 Find datasets relevant
 
-DO NOT make up data or make synthetic data. pull from r
+DO NOT make up data or make synthetic dat
 
 # Datasets
 
