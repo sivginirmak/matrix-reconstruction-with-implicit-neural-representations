@@ -1,6 +1,6 @@
 Find datasets relevant
 
-DO NOT make up data or make synthetic dat
+DO NOT make up data or make synthetic data. pull from reputab
 
 # Datasets
 
