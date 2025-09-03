@@ -99,22 +99,7 @@ Proving this hypothesis will reshape the field by:
 3. **Author's Prior Work** (https://arxiv.org/pdf/2506.11139): Initial experiments complementing theoretical foundations
 4. **SIREN vs. Fourier Features**: Comparative analysis of positional encoding strategies for continuous representations
 
-## Research Methodology Notes
-
-Following the established research methodology:
-
-### Hypothesis Structure (∃ X + X > Y)
-
-* **∃ X**: It's possible to construct effective 2D-specialized INR architectures
-* **X > Y**: These 2D-optimized architectures outperform direct 3D→2D adaptations
-
-### Literature Points Identified
-
-1. **Planar factorization efficiency** spans K-Planes and related work
-2. **Decoder architecture trade-offs** spans NeRF, SIREN, and recent explicit methods
-3. **Domain transfer assumptions** implicit across multiple INR papers
-
-### Research Risk Assessment
+## Research Risk Assessment
 
 * **Highest Risk**: Architectural differences may be too subtle to detect in 2D domain
 * **Mitigation**: Focus on clear parameter efficiency and computational speed metrics
