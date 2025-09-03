@@ -98,5 +98,3 @@ Proving this hypothesis will reshape the field by:
 2. **NeRF** (Mildenhall et al., ECCV 2020): Foundation work on continuous 5D neural radiance fields with MLP architectures
 3. **Author's Prior Work** (https://arxiv.org/pdf/2506.11139): Initial experiments complementing theoretical foundations
 4. **SIREN vs. Fourier Features**: Comparative analysis of positional encoding strategies for continuous representations
-
-##
