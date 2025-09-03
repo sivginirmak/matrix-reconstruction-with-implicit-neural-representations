@@ -48,7 +48,7 @@ Proving this hypothesis will reshape the field by:
 * K-planes with MLP decoder  in 2D is like: MLP(f\_u\*f\_v) where f\_u, f\_v are line features. GA-planes: MLP(f\_u (times or concat or add) f\_v (add or concat) f\_uv) where f\_uv is low-res plane feature (all features are upsampled by interpolation)
 * comparison of convex vs nonconvex MLPs
 * addition of quantization: MLP(quant(f\_u)...) -- try doing QAT
-* with/without interpolation
+* with/without interpolation: can compare MLP(U@V) vs SVD fitting U@V&#x20;
 * Controlled comparison with identical training protocols and evaluation metrics
 
 **Phase 2: Component Analysis**
