@@ -21,37 +21,6 @@ jobs:
           fetch-depth: 1 # shallow clone to avoid LFS issues
           lfs: false # Skip all LFS files
 
-      - name: Create mock data for analysis
-        run: |
-          # Create essential data summaries without downloading large LFS files
-          mkdir -p data/processed
-          
-          # Create hypothesis summary (if LFS file exists, use pointer content)
-          if [ -f hypothesis.jsonl ]; then
-            echo "Using existing hypothesis file"
-          else
-            echo '{"hypothesis": "daha/dawa grammaticalization in Stanford co-ops", "status": "testing"}' > hypothesis.jsonl
-          fi
-          
-          # Create data summary for analysis
-          cat > data/comprehensive_dataset_analysis.json << 'EOF'
-          {
-            "total_messages": 9400,
-            "daha_instances": 7400,
-            "dawa_instances": 1700,
-            "communities": {
-              "co_ops": {"daha": 7000, "dawa": 1600, "innovation_rate": "high"},
-              "regular_dorms": {"daha": 400, "dawa": 100, "innovation_rate": "low"}
-            },
-            "key_findings": [
-              "Semantic broadening beyond original meanings",
-              "Syntactic expansion to non-NP complements",
-              "Social identity indexing function",
-              "Community-specific grammaticalization patterns"
-            ]
-          }
-          EOF
-
       - name: Hypothesis
         uses: anthropics/claude-code-action@beta
         with:
@@ -180,7 +149,7 @@ jobs:
             You are a research assistant using scientific thinking and rigorous methodology.
             
             THINK DEEPLY AND THOROUGHLY about experimental design.
-            Use ultra-careful planning to design rigorous experiments that an AI agent could run.
+            Carefully plan to design rigorous experiments that an AI agent could run.
             Check proposal.jsonl and run.jsonl to see what has been done in the past. 
             Update section_notes/03-experiment-ideas.md with your ideas. Update proposal.jsonl with your proposals.
           mcp_config: |
@@ -329,6 +298,8 @@ jobs:
             ================================================================
             
             You are a research assistant using scientific thinking and rigorous methodology.
+            
+            NO SYNTHETIC DATA - ONLY DOWNLOAD ACTUAL DATA.
             
             STEP 1 - CHECK EXISTING DATASETS FIRST:
             ========================================
@@ -730,12 +701,22 @@ jobs:
               }
             }
           direct_prompt: |
-            ⚠️ ULTRA THINKING MODE - THINK DEEPLY BEFORE ACTING ⚠️
+            ⚠️ DEEP THINKING MODE - THINK DEEPLY BEFORE ACTING ⚠️
             ================================================================
             You are a research assistant using scientific thinking and rigorous methodology.
             
             THINK DEEPLY AND THOROUGHLY about the experimental implementation.
-            Use ULTRA-CAREFUL reasoning and execution at every step.
+            CAREFULLY reason and execute at every step.
+          
+            OVERALL: 
+            - REFLECT on your trajectory every ~10 steps and at the end to check for hallucinations
+            - TEST key pieces of your code before running full experiments
+            - DEBUG where needed - don't skip error handling
+            - AVOID SYNTHETIC DATA FOR EXPERIMENT RESULTS -  USE REAL DATA. Avoid synthetic data except for testing parts of your code - it does not count as experiment results
+            - VERIFY accuracy of all claims and results - check for hallucinations
+            - EVALUATE REALISTICITY OF THE RESULTS - it is okay to fail an experiment. The most important thing is to learn from failures.
+            - IF USER SPECIFIES AN EXISTING EXPERIMENT TO EDIT, IMPROVE THAT EXPERIMENT RATHER THAN CREATING A NEW ONE
+          
             
             STEP 1: ANALYZE RESEARCH TYPE AND INSTALL NECESSARY PACKAGES
             -------------------------------------------------------------
@@ -1035,7 +1016,7 @@ jobs:
                - Expected outcomes
                - Computational requirements
             
-            5. IMPLEMENT in experiments/<exp_id>/code/:
+            5. IMPLEMENT in experiments/<exp_id>/code/. For example:
                ```python
                # main.py - Main experiment script with argparse
                # config.py - Configuration and hyperparameters
@@ -1047,7 +1028,7 @@ jobs:
                # visualize.py - Results visualization
                ```
             
-            6. USE proper experiment structure:
+            6. USE proper experiment structure. For example:
                ```python
                # main.py template
                import argparse
@@ -1080,7 +1061,7 @@ jobs:
                        torch.cuda.manual_seed_all(args.seed)
                ```
             
-            7. EXECUTE the experiment with proper logging:
+            7. EXECUTE the experiment with proper logging. For example:
                ```bash
                cd experiments/$exp_id/code
                
@@ -1166,7 +1147,7 @@ jobs:
             --------------
             ```bash
             git add experiments/<exp_id>/
-            git commit -m "feat: Complete experiment <exp_id> - <brief description>
+            git commit -m "run: Complete experiment <exp_id> - <brief description>
             
             Results:
             - Metric 1: X.XX
@@ -1247,7 +1228,7 @@ jobs:
             You are a research assistant using scientific thinking and rigorous methodology.
             
             THINK DEEPLY AND THOROUGHLY about the results and their implications.
-            Use ultra-careful analysis. Check analyze.jsonl and experiments/ to see what has been done in the past.
+            Carefully analyze. Check analyze.jsonl and experiments/ to see what has been done in the past.
             
             You have FULL COMMAND EXECUTION permissions! Install any analysis packages you need:
             ```bash
@@ -1299,16 +1280,16 @@ jobs:
             You are a research assistant using scientific thinking and following NeurIPS paper writing guidelines.
             
             THINK DEEPLY AND THOROUGHLY about the research narrative and contributions.
-            Use ultra-careful synthesis to either improve an existing paper draft in Latex or write a new one. Look at the section_notes/ for each crucial section: research concept, literature review, experiment ideas, experiment runs, experiment analyses. 
-            If you are improving an existing paper, first review the related_work/ and paper.jsonl and give a critical review of the experiments and paper. This review will inform your revisions. 
-            Your Latex structure won't be exactly the same but be faithful to the content in these sections.
+            Carefully synthesize to either improve an existing paper draft in Latex or write a new one. Look at the section_notes/ for each crucial section: research concept, literature review, experiment ideas, experiment runs, experiment analyses. 
+            Your Latex structure won't be exactly the same but be faithful to the content in the sections. 
+            If there are existing paper drafts in paper_drafts/, first review the latest paper draft alongside the pre-existing literature in paper.jsonl and section_notes/02-lit-review.md. and give a critical review of the experiments and paper. This review will inform your revisions. 
             Use paper.jsonl for further related work papers to cite. Make sure to include references. 
             You should look at the experiments conducted too in experiments/<exp_id>/result.md to see results of conducted experiments. If there are meaningful results, make sure to include plots and tables (in pure Latex) from the experiments conducted. You may also embed any images from experiments. 
             ALL WRITING SHOULD BE FAITHFUL TO SOURCE CONTENT. Claims should be thoughtful and backed by evidence.  
             CONSTANTLY double check that your Latex compiles and you are following the specified paper writing guidelines.
             It should be no longer than 8 pages not including references.
             Once done:
-            - Add your review as a '.md' to the paper-drafts/ folder.
+            - Add your review as a '.md' to the paper-drafts/ folder. Or update the existing one if specified.
             - Add or update your '.tex' draft to the paper-drafts/ folder.
           mcp_config: |
             {
