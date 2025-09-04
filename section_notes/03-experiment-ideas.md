@@ -1,4 +1,3 @@
-
 # Experiment Ideas: Systematic Comparison of INR Architectures for 2D Matrix Reconstruction
 
 ## Experimental Design Framework
@@ -24,14 +23,14 @@ Planar factorization methods with explicit geometric bias will achieve superior 
 
 #### Architecture Types
 1. **K-Planes Variants**
-   - Line features: `f_u * f_v` (multiplicative)
-   - Line features: `f_u + f_v` (additive)
+   - Line features: \`f_u * f_v\` (multiplicative)
+   - Line features: \`f_u + f_v\` (additive)
    - With/without low-resolution plane features
 
 2. **GA-Planes Variants**
-   - `MLP(f_u * f_v + f_uv)` (multiplicative + plane)
-   - `MLP(f_u + f_v + f_uv)` (additive + plane)
-   - `MLP(concat(f_u, f_v, f_uv))` (concatenation)
+   - \`MLP(f_u * f_v + f_uv)\` (multiplicative + plane)
+   - \`MLP(f_u + f_v + f_uv)\` (additive + plane)
+   - \`MLP(concat(f_u, f_v, f_uv))\` (concatenation)
 
 3. **NeRF Variants**
    - ReLU activations (standard)
@@ -42,9 +41,9 @@ Planar factorization methods with explicit geometric bias will achieve superior 
    - 2D Gaussian splats with optimized parameters
 
 #### Decoder Architectures
-1. **Linear Decoder:** `Linear(dim_features → 1)`
-2. **Nonconvex MLP:** `Linear(dim_features → m) → ReLU → Linear(m → 1)`
-3. **Convex MLP:** `Linear(dim_features → m) * (Linear(dim_features → m) > 0)`
+1. **Linear Decoder:** \`Linear(dim_features → 1)\`
+2. **Nonconvex MLP:** \`Linear(dim_features → m) → ReLU → Linear(m → 1)\`
+3. **Convex MLP:** \`Linear(dim_features → m) * (Linear(dim_features → m) > 0)\`
 
 #### Optimization Strategies
 1. **Standard Training**
@@ -86,9 +85,9 @@ Planar factorization methods with explicit geometric bias will achieve superior 
 
 2. **Architecture Sweep**
    - Test all architecture combinations systematically
-   - Use grid search over resolution parameters: `[32, 64, 128, 192, 256]`
-   - Test feature dimensions: `[32, 64, 128]`
-   - Test hidden dimensions: `[32, 64, 128, 256]`
+   - Use grid search over resolution parameters: \`[32, 64, 128, 192, 256]\`
+   - Test feature dimensions: \`[32, 64, 128]\`
+   - Test hidden dimensions: \`[32, 64, 128, 256]\`
 
 3. **Controlled Comparison**
    - Fixed training protocol: 1000 epochs, Adam optimizer
@@ -103,7 +102,7 @@ Planar factorization methods with explicit geometric bias will achieve superior 
 - Measure impact on reconstruction quality and training dynamics
 
 **B. Operation Type Ablation**
-- Compare multiplicative (`f_u * f_v`) vs. additive (`f_u + f_v`) operations
+- Compare multiplicative (\`f_u * f_v\`) vs. additive (\`f_u + f_v\`) operations
 - Analyze geometric bias implications
 
 **C. Quantization Impact Study**
@@ -155,7 +154,7 @@ Planar factorization methods with explicit geometric bias will achieve superior 
 - **Compute Time:** ~20-30 hours for complete experimental suite
 
 #### Code Structure
-```python
+\`\`\`python
 # Based on experiments/some_examples.py architecture
 class ExperimentRunner:
     def __init__(self, config):
@@ -172,7 +171,7 @@ class ExperimentRunner:
     def run_optimization_study(self):
         # Phase 3: Domain-specific optimization
         pass
-```
+\`\`\`
 
 ### Expected Outcomes and Impact
 
