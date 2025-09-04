@@ -1,3 +1,3 @@
-# use experiments/example\_experiment as template to run
+# use experiments/example\_experiment as template to run main ex
 
 # using notes/some\_examples.py as implementation reference, run the main experiment!&#x20;
