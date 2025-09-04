@@ -1,0 +1,10 @@
+2025-09-04 16:59:47,895 - INFO - ================================================================================
+2025-09-04 16:59:47,895 - INFO - INR ARCHITECTURE COMPARISON EXPERIMENT
+2025-09-04 16:59:47,895 - INFO - ================================================================================
+2025-09-04 16:59:47,895 - INFO - Output directory: /home/runner/work/matrix-reconstruction-with-implicit-neural-representations/matrix-reconstruction-with-implicit-neural-representations/experiments/exp001_architecture_comparison/results
+2025-09-04 16:59:47,895 - INFO - Device: cpu
+2025-09-04 16:59:47,896 - INFO - Number of seeds: 3
+2025-09-04 16:59:47,896 - INFO - Running in quick test mode
+2025-09-04 16:59:47,896 - INFO - Generated 42 experiment configurations
+2025-09-04 16:59:47,896 - INFO - Starting experimental suite: 42 configs × 2 seeds = 84 total experiments
+2025-09-04 16:59:47,896 - INFO - Running configuration 1/42: kplanes-linear
