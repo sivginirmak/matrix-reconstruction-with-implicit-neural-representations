@@ -7,6 +7,7 @@ Based on the research hypothesis that **planar factorization methods (K-Planes) 
 ## Core Experiment: Architecture Comparison Study
 
 ### Thesis Statement
+
 Planar factorization methods with explicit geometric bias will achieve superior parameter efficiency and reconstruction quality compared to purely implicit MLP-based representations when applied to 2D matrix reconstruction tasks.
 
 ### Testable Hypotheses
@@ -22,35 +23,36 @@ Planar factorization methods with explicit geometric bias will achieve superior 
 ### Independent Variables (What to Manipulate)
 
 #### Architecture Types
+
 1. **K-Planes Variants**
-   - Line features: \`f_u * f_v\` (multiplicative)
-   - Line features: \`f_u + f_v\` (additive)
-   - With/without low-resolution plane features
-
+   * Line features: \`f\_u \* f\_v\` (multiplicative)
+   * Line features: \`f\_u + f\_v\` (additive)
+   * With/without low-resolution plane features
 2. **GA-Planes Variants**
-   - \`MLP(f_u * f_v + f_uv)\` (multiplicative + plane)
-   - \`MLP(f_u + f_v + f_uv)\` (additive + plane)
-   - \`MLP(concat(f_u, f_v, f_uv))\` (concatenation)
-
+   * \`MLP(f\_u \* f\_v + f\_uv)\` (multiplicative + plane)
+   * \`MLP(f\_u + f\_v + f\_uv)\` (additive + plane)
+   * \`MLP(concat(f\_u, f\_v, f\_uv))\` (concatenation)
 3. **NeRF Variants**
-   - ReLU activations (standard)
-   - Sinusoidal activations (SIREN)
-   - Different positional encoding strategies
-
+   * ReLU activations (standard)
+   * Sinusoidal activations (SIREN)
+   * Different positional encoding strategies
 4. **Gaussian Splat Adaptations**
-   - 2D Gaussian splats with optimized parameters
+   * 2D Gaussian splats with optimized parameters
 
 #### Decoder Architectures
-1. **Linear Decoder:** \`Linear(dim_features → 1)\`
-2. **Nonconvex MLP:** \`Linear(dim_features → m) → ReLU → Linear(m → 1)\`
-3. **Convex MLP:** \`Linear(dim_features → m) * (Linear(dim_features → m) > 0)\`
+
+1. **Linear Decoder:** \`Linear(dim\_features → 1)\`
+2. **Nonconvex MLP:** \`Linear(dim\_features → m) → ReLU → Linear(m → 1)\`
+3. **Convex MLP:** \`Linear(dim\_features → m) \* (Linear(dim\_features → m) > 0)\`
 
 #### Optimization Strategies
+
 1. **Standard Training**
 2. **Quantization-Aware Training (QAT):** 4-bit quantization with straight-through estimators
 3. **Sparse Training:** Top-k sparsity projection during training
 
 #### Interpolation Methods
+
 1. **Bilinear Interpolation** (default)
 2. **Nearest Neighbor**
 3. **Learned Interpolation** (if applicable)
@@ -58,12 +60,14 @@ Planar factorization methods with explicit geometric bias will achieve superior 
 ### Dependent Variables (What to Measure)
 
 #### Primary Metrics
+
 1. **Peak Signal-to-Noise Ratio (PSNR)** - Target: >35dB
 2. **Parameter Count** - Total learnable parameters
 3. **Parameter Efficiency** - PSNR per parameter ratio
 4. **Training Time** - Time to convergence (epochs and wall-clock time)
 
 #### Secondary Metrics
+
 1. **Memory Usage** - Peak GPU memory during training
 2. **Inference Speed** - Forward pass time per image
 3. **Convergence Stability** - PSNR variance across runs
@@ -74,116 +78,136 @@ Planar factorization methods with explicit geometric bias will achieve superior 
 #### Phase 1: Systematic Architecture Comparison
 
 **Datasets:**
-- Primary: Grayscale astronaut image (512×512) from scikit-image
-- Secondary: Natural images from standard datasets (CIFAR-10, ImageNet samples)
-- Tertiary: Synthetic patterns (checkerboards, gradients) for controlled analysis
+
+* Primary: Grayscale astronaut image (512×512) from scikit-image
+* Secondary: Natural images from standard datasets (CIFAR-10, ImageNet samples)
+* Tertiary: Synthetic patterns (checkerboards, gradients) for controlled analysis
 
 **Procedure:**
+
 1. **Baseline Establishment**
-   - Run traditional compression methods (JPEG, PNG, SVD) for comparison
-   - Establish parameter efficiency benchmarks
-
+   * Run traditional compression methods (JPEG, PNG, SVD) for comparison
+   * Establish parameter efficiency benchmarks
 2. **Architecture Sweep**
-   - Test all architecture combinations systematically
-   - Use grid search over resolution parameters: \`[32, 64, 128, 192, 256]\`
-   - Test feature dimensions: \`[32, 64, 128]\`
-   - Test hidden dimensions: \`[32, 64, 128, 256]\`
-
+   * Test all architecture combinations systematically
+   * Use grid search over resolution parameters: \`\[32, 64, 128, 192, 256]\`
+   * Test feature dimensions: \`\[32, 64, 128]\`
+   * Test hidden dimensions: \`\[32, 64, 128, 256]\`
 3. **Controlled Comparison**
-   - Fixed training protocol: 1000 epochs, Adam optimizer
-   - Learning rates optimized per architecture type
-   - Multiple random seeds (5 runs) for statistical significance
+   * Fixed training protocol: 1000 epochs, Adam optimizer
+   * Learning rates optimized per architecture type
+   * Multiple random seeds (5 runs) for statistical significance
 
 #### Phase 2: Component Ablation Studies
 
 **A. Decoder Architecture Ablation**
-- Compare linear vs. nonconvex vs. convex decoders
-- Fixed architecture backbone (K-Planes)
-- Measure impact on reconstruction quality and training dynamics
+
+* Compare linear vs. nonconvex vs. convex decoders
+* Fixed architecture backbone (K-Planes)
+* Measure impact on reconstruction quality and training dynamics
 
 **B. Operation Type Ablation**
-- Compare multiplicative (\`f_u * f_v\`) vs. additive (\`f_u + f_v\`) operations
-- Analyze geometric bias implications
+
+* Compare multiplicative (\`f\_u \* f\_v\`) vs. additive (\`f\_u + f\_v\`) operations
+* Analyze geometric bias implications
 
 **C. Quantization Impact Study**
-- Compare full precision vs. 4-bit quantized models
-- Measure quality degradation vs. compression gains
+
+* Compare full precision vs. 4-bit quantized models
+* Measure quality degradation vs. compression gains
 
 #### Phase 3: Domain-Specific Optimization
 
 **CPU-Friendly Implementations**
-- Leverage 2D computational advantages
-- Compare training/inference efficiency on CPU vs. GPU
-- Optimize for mobile/edge deployment scenarios
+
+* Leverage 2D computational advantages
+* Compare training/inference efficiency on CPU vs. GPU
+* Optimize for mobile/edge deployment scenarios
 
 ### Validity Threats and Mitigations
 
 #### Internal Validity
-- **Threat:** Implementation differences between architectures
-- **Mitigation:** Use unified codebase with shared components
-- **Threat:** Hyperparameter optimization bias
-- **Mitigation:** Grid search with identical ranges for all architectures
+
+* **Threat:** Implementation differences between architectures
+* **Mitigation:** Use unified codebase with shared components
+* **Threat:** Hyperparameter optimization bias
+* **Mitigation:** Grid search with identical ranges for all architectures
 
 #### External Validity
-- **Threat:** Single image evaluation
-- **Mitigation:** Test on diverse image types and sizes
-- **Threat:** 2D-specific conclusions may not generalize
-- **Mitigation:** Compare with 3D reconstruction literature benchmarks
+
+* **Threat:** Single image evaluation
+* **Mitigation:** Test on diverse image types and sizes
+* **Threat:** 2D-specific conclusions may not generalize
+* **Mitigation:** Compare with 3D reconstruction literature benchmarks
 
 #### Statistical Validity
-- **Threat:** Insufficient sample size
-- **Mitigation:** Multiple runs with different seeds (n=5)
-- **Threat:** Multiple testing problem
-- **Mitigation:** Bonferroni correction for hypothesis testing
+
+* **Threat:** Insufficient sample size
+* **Mitigation:** Multiple runs with different seeds (n\=5)
+* **Threat:** Multiple testing problem
+* **Mitigation:** Bonferroni correction for hypothesis testing
 
 ### Implementation Specifications
 
 #### Programming Environment
-- **Language:** Python 3.8+
-- **Deep Learning:** PyTorch 1.12+
-- **Numerical Computing:** NumPy 1.21+, SciPy 1.7+
-- **Image Processing:** scikit-image 0.19+, PIL 9.0+
-- **Visualization:** Matplotlib 3.5+, seaborn 0.11+
-- **Statistical Testing:** scipy.stats, pingouin
-- **Progress Tracking:** tqdm
+
+* **Language:** Python 3.8+
+* **Deep Learning:** PyTorch 1.12+
+* **Numerical Computing:** NumPy 1.21+, SciPy 1.7+
+* **Image Processing:** scikit-image 0.19+, PIL 9.0+
+* **Visualization:** Matplotlib 3.5+, seaborn 0.11+
+* **Statistical Testing:** scipy.stats, pingouin
+* **Progress Tracking:** tqdm
 
 #### Hardware Requirements
-- **GPU:** NVIDIA GPU with 8GB+ VRAM (RTX 3070 or equivalent)
-- **Memory:** 16GB+ RAM
-- **Storage:** 50GB+ for datasets and model checkpoints
-- **Compute Time:** ~20-30 hours for complete experimental suite
+
+* **GPU:** NVIDIA GPU with 8GB+ VRAM (RTX 3070 or equivalent)
+* **Memory:** 16GB+ RAM
+* **Storage:** 50GB+ for datasets and model checkpoints
+* **Compute Time:** \~20-30 hours for complete experimental suite
 
 #### Code Structure
+
 \`\`\`python
-# Based on experiments/some_examples.py architecture
+
+# Based on experiments/some\_examples.py architecture
+
 class ExperimentRunner:
-    def __init__(self, config):
-        self.config = config
-        
-    def run_architecture_comparison(self):
-        # Phase 1: Systematic comparison
-        pass
-        
-    def run_ablation_studies(self):
-        # Phase 2: Component analysis
-        pass
-        
-    def run_optimization_study(self):
-        # Phase 3: Domain-specific optimization
-        pass
+def **init**(self, config):
+self.config \= config
+
+def run\_architecture\_comparison(self):
+
+# Phase 1: Systematic comparison
+
+pass
+
+def run\_ablation\_studies(self):
+
+# Phase 2: Component analysis
+
+pass
+
+def run\_optimization\_study(self):
+
+# Phase 3: Domain-specific optimization
+
+pass
 \`\`\`
 
 ### Expected Outcomes and Impact
 
 #### If Hypothesis H1 is Confirmed:
-- Demonstrates architectural transferability from 3D to 2D domains
-- Establishes design principles for 2D-specific INR architectures
-- Provides efficiency benchmarks for future research
+
+* Demonstrates architectural transferability from 3D to 2D domains
+* Establishes design principles for 2D-specific INR architectures
+* Provides efficiency benchmarks for future research
 
 #### If Hypothesis H1 is Rejected:
-- Reveals limitations of explicit geometric priors in 2D
-- Suggests domain-specific architectural requirements
-- Identifies need for alternative approaches
+
+* Reveals limitations of explicit geometric priors in 2D
+* Suggests domain-specific architectural requirements
+* Identifies need for alternative approaches
 
 ### Statistical Analysis Plan
 
@@ -195,9 +219,9 @@ class ExperimentRunner:
 
 ### Success Criteria
 
-- **Primary Success:** H1 confirmed with p < 0.05 and effect size > 0.8
-- **Secondary Success:** Clear ranking of architectures with statistical support
-- **Practical Success:** Reproducible implementations and clear guidelines
+* **Primary Success:** H1 confirmed with p < 0.05 and effect size > 0.8
+* **Secondary Success:** Clear ranking of architectures with statistical support
+* **Practical Success:** Reproducible implementations and clear guidelines
 
 ## References and Related Work
 
