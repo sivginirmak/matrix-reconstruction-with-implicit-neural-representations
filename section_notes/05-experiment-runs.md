@@ -1,1 +1,1 @@
-# using notes/some\_examples.py as implementation reference, run the experiment!&#x20;
+# using notes/some\_examples.py as implementation reference, run the main experiment!&#x20;
