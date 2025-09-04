@@ -1,5 +1,3 @@
-
-
 # Experiment Runs: INR Architecture Comparison for 2D Matrix Reconstruction
 
 ## Overview
@@ -12,7 +10,7 @@ This section documents the systematic experimental validation of the primary res
 
 **Objective**: Test the primary hypothesis that K-Planes architectures achieve superior reconstruction quality compared to NeRF for 2D matrix reconstruction.
 
-**Implementation**: `experiments/exp001_architecture_comparison/`
+**Implementation**: \`experiments/exp001_architecture_comparison/\`
 
 #### Experimental Design
 
@@ -22,7 +20,7 @@ This section documents the systematic experimental validation of the primary res
 - **Significance Level**: α = 0.05 with 95% confidence intervals
 
 **Architecture Matrix**:
-```
+\`\`\`
 K-Planes Variants:
 ├── Multiplicative (f_u * f_v + f_plane)
 │   ├── Linear decoder
@@ -36,7 +34,7 @@ NeRF Variants:
 │   └── Nonconvex decoder
 └── SIREN (Sinusoidal activations)
     └── Linear decoder
-```
+\`\`\`
 
 **Parameter Sweeps**:
 - Feature dimensions: [32, 64, 128]
@@ -46,16 +44,16 @@ NeRF Variants:
 
 #### Technical Implementation
 
-**Model Architecture**: Unified `CustomModel` class supporting both K-Planes and NeRF:
+**Model Architecture**: Unified \`CustomModel\` class supporting both K-Planes and NeRF:
 
-```python
+\`\`\`python
 # K-Planes: Explicit factorization
 features = line_feature_x * line_feature_y + plane_feature  # multiplicative
 features = line_feature_x + line_feature_y + plane_feature  # additive
 
 # NeRF: Implicit coordinate encoding  
 features = MLP(coordinate_encoding(x, y))
-```
+\`\`\`
 
 **Training Protocol**:
 - Dataset: Scikit-image astronaut (512×512, grayscale)
@@ -147,13 +145,12 @@ features = MLP(coordinate_encoding(x, y))
 
 ## Implementation Files
 
-- **Main Experiment**: `experiments/exp001_architecture_comparison/main.py`
-- **Experiment Plan**: `experiments/exp001_architecture_comparison/plan.md`  
-- **Results Analysis**: `experiments/exp001_architecture_comparison/results.md`
+- **Main Experiment**: \`experiments/exp001_architecture_comparison/main.py\`
+- **Experiment Plan**: \`experiments/exp001_architecture_comparison/plan.md\`  
+- **Results Analysis**: \`experiments/exp001_architecture_comparison/results.md\`
 - **Statistical Framework**: Integrated hypothesis testing with pingouin, scipy.stats
 - **Visualization Pipeline**: Publication-quality plots with matplotlib, seaborn
 
 ---
 
 **Research Status**: Experiment framework complete, comprehensive validation demonstrates strong likelihood of primary hypothesis confirmation (K-Planes >5dB improvement over NeRF for 2D reconstruction).
-
