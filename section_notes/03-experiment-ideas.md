@@ -166,8 +166,6 @@ Planar factorization methods with explicit geometric bias will achieve superior 
 * **Storage:** 50GB+ for datasets and model checkpoints
 * **Compute Time:** \~20-30 hours for complete experimental suite
 
-
-
 #### Code Structure
 
 \`\`\`python
