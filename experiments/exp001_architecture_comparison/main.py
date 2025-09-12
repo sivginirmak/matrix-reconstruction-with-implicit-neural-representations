@@ -5,6 +5,20 @@ INR Architecture Comparison Experiment
 
 Systematic comparison of K-Planes vs NeRF architectures for 2D matrix reconstruction.
 Tests the primary research hypothesis using rigorous statistical methodology.
+
+Model Naming Conventions:
+------------------------
+- K-planes: Models using ONLY line features (line_feat_x * line_feat_y or line_feat_x + line_feat_y)
+  * K-planes(multiply): decoder(line_feat_x * line_feat_y)
+  * K-planes(add): decoder(line_feat_x + line_feat_y)
+
+- GA-Planes: Models using line features + low-resolution plane features
+  * GA-Planes(multiply+plane): decoder(line_feat_x * line_feat_y + plane_feat)
+  * GA-Planes(add+plane): decoder(line_feat_x + line_feat_y + plane_feat)
+
+- NeRF: Coordinate-based models with deeper MLPs
+  * NeRF(nonconvex): Standard ReLU-based deep network
+  * NeRF(siren): SIREN-based with sinusoidal activations
 """
 
 import numpy as np
@@ -81,9 +95,11 @@ class CustomModel(nn.Module):
             # NeRF: coordinate encoding + MLP
             # For fair comparison, use similar parameter count
             if decoder == 'siren':
-                # SIREN initialization
+                # SIREN initialization with deeper network
                 self.coord_mlp = nn.Sequential(
                     nn.Linear(2, dim_features, bias=bias),
+                    nn.Linear(dim_features, dim_features, bias=bias),
+                    nn.Linear(dim_features, dim_features, bias=bias),
                     nn.Linear(dim_features, dim_features, bias=bias),
                 )
                 # Initialize for SIREN
@@ -92,9 +108,13 @@ class CustomModel(nn.Module):
                         with torch.no_grad():
                             layer.weight.uniform_(-1 / layer.in_features, 1 / layer.in_features)
             else:
-                # Standard ReLU NeRF
+                # Standard ReLU NeRF with deeper network (typical for NeRF)
                 self.coord_mlp = nn.Sequential(
                     nn.Linear(2, dim_features, bias=bias),
+                    nn.ReLU(),
+                    nn.Linear(dim_features, dim_features, bias=bias),
+                    nn.ReLU(),
+                    nn.Linear(dim_features, dim_features, bias=bias),
                     nn.ReLU(),
                     nn.Linear(dim_features, dim_features, bias=bias),
                     nn.ReLU(),
@@ -197,10 +217,7 @@ class CustomModel(nn.Module):
             features = normalized_coords
             for i, layer in enumerate(self.coord_mlp):
                 features = layer(features)
-                if i == 0:
-                    features = torch.sin(features)  # First layer sine
-                else:
-                    features = torch.sin(features)  # Subsequent layers sine
+                features = torch.sin(features)  # SIREN uses sine activations
         else:
             # Standard ReLU encoding
             features = self.coord_mlp(normalized_coords)
@@ -229,7 +246,49 @@ def model_parameter_count(model: nn.Module) -> int:
     """Count trainable parameters in model."""
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
-def run_single_experiment(config: Dict[str, Any], seed: int = 42) -> Dict[str, Any]:
+def save_reconstruction_visualization(reconstruction_history: List[Dict], 
+                                    ground_truth: np.ndarray,
+                                    output_path: Path,
+                                    model_name: str):
+    """Save visualization of reconstruction progress over training epochs."""
+    if not reconstruction_history:
+        return
+    
+    # Select up to 6 checkpoints for visualization
+    num_checkpoints = min(6, len(reconstruction_history))
+    indices = np.linspace(0, len(reconstruction_history) - 1, num_checkpoints, dtype=int)
+    
+    fig, axes = plt.subplots(2, num_checkpoints + 1, figsize=(3 * (num_checkpoints + 1), 6))
+    
+    # Ground truth
+    axes[0, 0].imshow(ground_truth, cmap='gray')
+    axes[0, 0].set_title('Ground Truth')
+    axes[0, 0].axis('off')
+    axes[1, 0].axis('off')
+    
+    # Reconstructions at different epochs
+    for i, idx in enumerate(indices):
+        checkpoint = reconstruction_history[idx]
+        epoch = checkpoint['epoch']
+        recon = checkpoint['reconstruction']
+        psnr = checkpoint['psnr']
+        
+        axes[0, i + 1].imshow(recon, cmap='gray')
+        axes[0, i + 1].set_title(f'Epoch {epoch}')
+        axes[0, i + 1].axis('off')
+        
+        # Difference image
+        diff = np.abs(ground_truth - recon)
+        axes[1, i + 1].imshow(diff, cmap='hot')
+        axes[1, i + 1].set_title(f'Error (PSNR: {psnr:.1f}dB)')
+        axes[1, i + 1].axis('off')
+    
+    plt.suptitle(f'{model_name} Reconstruction Progress', fontsize=14)
+    plt.tight_layout()
+    plt.savefig(output_path, dpi=150, bbox_inches='tight')
+    plt.close()
+
+def run_single_experiment(config: Dict[str, Any], seed: int = 42, visualize_every: int = 200) -> Dict[str, Any]:
     """
     Run a single experiment configuration with statistical tracking.
     
@@ -268,7 +327,7 @@ def run_single_experiment(config: Dict[str, Any], seed: int = 42) -> Dict[str, A
         decoder=config['decoder'],
         interpolation='bilinear',
         bias=True,
-        mode='lowres',
+        mode=config.get('mode', 'no_plane'),  # Use mode from config
         architecture=config['architecture']
     ).to(device)
     
@@ -280,10 +339,11 @@ def run_single_experiment(config: Dict[str, Any], seed: int = 42) -> Dict[str, A
     # Training loop
     num_epochs = config.get('num_epochs', 1000)
     psnr_history = []
+    reconstruction_history = []  # Store reconstructions for visualization
     
     start_time = time.time()
     
-    for epoch in tqdm(range(num_epochs), desc=f"Training {config['architecture']}-{config['decoder']}"):
+    for epoch in tqdm(range(num_epochs), desc=f"Training {config['model_name']}-{config['decoder']}"):
         model.train()
         optimizer.zero_grad()
         
@@ -297,6 +357,18 @@ def run_single_experiment(config: Dict[str, Any], seed: int = 42) -> Dict[str, A
         if epoch % 100 == 0:
             current_psnr = -10 * np.log10(loss.item())
             psnr_history.append(current_psnr)
+        
+        # Visualize reconstruction every visualize_every epochs
+        if visualize_every > 0 and epoch % visualize_every == 0:
+            model.eval()
+            with torch.no_grad():
+                vis_outputs = model(coords)
+                reconstruction_history.append({
+                    'epoch': epoch,
+                    'reconstruction': vis_outputs.cpu().numpy(),
+                    'psnr': -10 * np.log10(criterion(vis_outputs, targets).item())
+                })
+            model.train()
     
     training_time = time.time() - start_time
     
@@ -316,6 +388,7 @@ def run_single_experiment(config: Dict[str, Any], seed: int = 42) -> Dict[str, A
     
     return {
         'architecture': config['architecture'],
+        'model_name': config['model_name'],  # Use the proper naming convention
         'operation': config['operation'],
         'decoder': config['decoder'],
         'feature_dim': config['feature_dim'],
@@ -327,6 +400,7 @@ def run_single_experiment(config: Dict[str, Any], seed: int = 42) -> Dict[str, A
         'param_efficiency': param_efficiency,
         'training_time': training_time,
         'psnr_history': psnr_history,
+        'reconstruction_history': reconstruction_history,  # Include visualization history
         'final_loss': final_loss.item(),
         'reconstruction': reconstruction
     }
@@ -339,18 +413,38 @@ def generate_experiment_configs() -> List[Dict[str, Any]]:
     feature_dims = [32, 64, 128]
     resolutions = [32, 64, 128]
     
-    # K-Planes configurations
+    # K-Planes configurations (line features only)
     for feature_dim in feature_dims:
         for resolution in resolutions:
             for operation in ['multiply', 'add']:
                 for decoder in ['linear', 'nonconvex']:
                     configs.append({
                         'architecture': 'kplanes',
+                        'model_name': f'K-planes({operation})',  # Proper naming
                         'operation': operation,
                         'decoder': decoder,
                         'feature_dim': feature_dim,
                         'line_resolution': resolution,
-                        'plane_resolution': resolution // 4,  # Lower res for efficiency
+                        'plane_resolution': 0,  # No plane features for K-planes
+                        'mode': 'no_plane',  # Line features only
+                        'learning_rate': 0.15 if operation == 'multiply' and decoder == 'linear' else 0.05,
+                        'num_epochs': 1000
+                    })
+    
+    # GA-Planes configurations (line features + low-res plane)
+    for feature_dim in feature_dims:
+        for resolution in resolutions:
+            for operation in ['multiply', 'add']:
+                for decoder in ['linear', 'nonconvex']:
+                    configs.append({
+                        'architecture': 'kplanes',
+                        'model_name': f'GA-Planes({operation}+plane)',  # Proper naming
+                        'operation': operation,
+                        'decoder': decoder,
+                        'feature_dim': feature_dim,
+                        'line_resolution': resolution,
+                        'plane_resolution': resolution // 4,  # Lower res plane for efficiency
+                        'mode': 'lowres',  # Include plane features
                         'learning_rate': 0.15 if operation == 'multiply' and decoder == 'linear' else 0.05,
                         'num_epochs': 1000
                     })
@@ -360,11 +454,13 @@ def generate_experiment_configs() -> List[Dict[str, Any]]:
         for decoder in ['nonconvex', 'siren']:
             configs.append({
                 'architecture': 'nerf',
+                'model_name': f'NeRF({decoder})',  # Proper naming
                 'operation': 'none',  # Not applicable for NeRF
                 'decoder': decoder,
                 'feature_dim': feature_dim,
                 'line_resolution': 0,  # Not applicable
                 'plane_resolution': 0,  # Not applicable
+                'mode': 'none',  # Not applicable
                 'learning_rate': 0.001 if decoder == 'siren' else 0.05,
                 'num_epochs': 1000
             })
@@ -389,16 +485,37 @@ def run_experiment_suite(output_dir: Path, num_seeds: int = 3) -> pd.DataFrame:
     logger.info(f"Starting experimental suite: {len(configs)} configs × {num_seeds} seeds = {len(configs) * num_seeds} total experiments")
     
     for i, config in enumerate(configs):
-        logger.info(f"Running configuration {i+1}/{len(configs)}: {config['architecture']}-{config['decoder']}")
+        logger.info(f"Running configuration {i+1}/{len(configs)}: {config['model_name']}-{config['decoder']}")
         
         for seed in range(num_seeds):
             try:
-                result = run_single_experiment(config, seed=seed + 42)
+                result = run_single_experiment(config, seed=seed + 42, visualize_every=200)
                 results.append(result)
+                
+                # Save reconstruction visualization
+                vis_dir = output_dir / 'visualizations'
+                vis_dir.mkdir(exist_ok=True)
+                
+                # Load ground truth image for visualization
+                img = skimage.data.astronaut() / 255.0
+                if len(img.shape) > 2:
+                    img = np.mean(img, axis=-1)
+                
+                # Save visualization if we have reconstruction history
+                if result.get('reconstruction_history'):
+                    vis_filename = f"{config['model_name']}_{config['decoder']}_seed{seed}.png".replace(' ', '_').replace('(', '').replace(')', '')
+                    save_reconstruction_visualization(
+                        result['reconstruction_history'],
+                        img,
+                        vis_dir / vis_filename,
+                        f"{config['model_name']} ({config['decoder']})"
+                    )
                 
                 # Save intermediate results
                 if len(results) % 10 == 0:
                     df_temp = pd.DataFrame(results)
+                    # Remove reconstruction_history from CSV to save space
+                    df_temp = df_temp.drop(columns=['reconstruction_history'], errors='ignore')
                     df_temp.to_csv(output_dir / 'intermediate_results.csv', index=False)
                     
             except Exception as e:
@@ -408,11 +525,12 @@ def run_experiment_suite(output_dir: Path, num_seeds: int = 3) -> pd.DataFrame:
     # Convert to DataFrame
     df_results = pd.DataFrame(results)
     
-    # Save complete results
-    df_results.to_csv(output_dir / 'complete_results.csv', index=False)
+    # Save complete results (excluding reconstruction history to save space)
+    df_save = df_results.drop(columns=['reconstruction_history'], errors='ignore')
+    df_save.to_csv(output_dir / 'complete_results.csv', index=False)
     
     # Save summary statistics
-    summary_stats = df_results.groupby(['architecture', 'decoder', 'operation']).agg({
+    summary_stats = df_results.groupby(['model_name', 'decoder']).agg({
         'psnr': ['mean', 'std', 'min', 'max'],
         'param_count': ['mean'],
         'param_efficiency': ['mean', 'std'],
@@ -440,7 +558,7 @@ def statistical_analysis(df: pd.DataFrame, output_dir: Path) -> Dict[str, Any]:
     stats_results = {}
     
     # 1. Descriptive Statistics
-    desc_stats = df.groupby(['architecture', 'decoder']).agg({
+    desc_stats = df.groupby(['model_name', 'decoder']).agg({
         'psnr': ['count', 'mean', 'std', 'min', 'max'],
         'param_efficiency': ['mean', 'std']
     }).round(4)
@@ -516,10 +634,11 @@ def generate_visualizations(df: pd.DataFrame, stats_results: Dict[str, Any], out
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
     
     # PSNR comparison
-    sns.boxplot(data=df, x='architecture', y='psnr', hue='decoder', ax=ax1)
-    ax1.set_title('PSNR by Architecture and Decoder', fontsize=14, fontweight='bold')
+    sns.boxplot(data=df, x='model_name', y='psnr', hue='decoder', ax=ax1)
+    ax1.set_title('PSNR by Model Type and Decoder', fontsize=14, fontweight='bold')
     ax1.set_ylabel('PSNR (dB)', fontsize=12)
-    ax1.set_xlabel('Architecture', fontsize=12)
+    ax1.set_xlabel('Model Type', fontsize=12)
+    ax1.tick_params(axis='x', rotation=45)
     
     # Parameter efficiency
     sns.scatterplot(data=df, x='param_count', y='psnr', hue='architecture', 
@@ -565,7 +684,7 @@ def generate_visualizations(df: pd.DataFrame, stats_results: Dict[str, Any], out
     
     # 3. Detailed Architecture Performance Heatmap
     if len(df) > 10:  # Only if sufficient data
-        pivot_data = df.groupby(['architecture', 'decoder'])['psnr'].mean().unstack(fill_value=0)
+        pivot_data = df.groupby(['model_name', 'decoder'])['psnr'].mean().unstack(fill_value=0)
         
         fig, ax = plt.subplots(1, 1, figsize=(10, 6))
         sns.heatmap(pivot_data, annot=True, fmt='.2f', cmap='viridis', 
@@ -578,6 +697,42 @@ def generate_visualizations(df: pd.DataFrame, stats_results: Dict[str, Any], out
     
     logger.info("Visualizations generated successfully")
 
+def generate_naming_convention_documentation(output_dir: Path):
+    """Generate documentation explaining the model naming conventions."""
+    doc_content = """# Model Naming Conventions
+
+## K-Planes (Line Features Only)
+- **K-planes(multiply)**: Uses decoder(line_feat_x * line_feat_y)
+- **K-planes(add)**: Uses decoder(line_feat_x + line_feat_y)
+- These models use ONLY line features without any plane features
+- The operation (multiply/add) determines how line features are combined
+
+## GA-Planes (Line + Plane Features)
+- **GA-Planes(multiply+plane)**: Uses decoder(line_feat_x * line_feat_y + plane_feat)
+- **GA-Planes(add+plane)**: Uses decoder(line_feat_x + line_feat_y + plane_feat)
+- These models include both line features AND low-resolution plane features
+- The plane features add a global context to the line-based factorization
+
+## NeRF (Coordinate-based)
+- **NeRF(nonconvex)**: Standard ReLU-based MLP with deeper networks
+- **NeRF(siren)**: SIREN-based continuous representation with sine activations
+- These models encode coordinates directly through MLPs without explicit factorization
+
+## Key Differences
+1. **K-planes**: Pure factorized representation using only 1D line features
+2. **GA-Planes**: Hybrid approach combining line features with 2D plane features
+3. **NeRF**: Implicit representation learning features from coordinates
+
+This naming convention accurately reflects the architectural differences and helps
+distinguish between models that use only line-based factorization (K-planes) versus
+those that incorporate additional planar features (GA-Planes).
+"""
+    
+    with open(output_dir / 'model_naming_conventions.md', 'w') as f:
+        f.write(doc_content)
+    
+    logger.info("Generated model naming convention documentation")
+
 def main():
     """Main experimental execution function."""
     parser = argparse.ArgumentParser(description='INR Architecture Comparison Experiment')
@@ -587,6 +742,8 @@ def main():
                        help='Number of random seeds per configuration')
     parser.add_argument('--quick_test', action='store_true',
                        help='Run quick test with minimal configurations')
+    parser.add_argument('--test_naming', action='store_true',
+                       help='Generate naming convention documentation only')
     
     args = parser.parse_args()
     
@@ -607,6 +764,14 @@ def main():
     logger.info(f"Output directory: {output_dir.absolute()}")
     logger.info(f"Device: {device}")
     logger.info(f"Number of seeds: {args.num_seeds}")
+    
+    # Generate naming convention documentation
+    generate_naming_convention_documentation(output_dir)
+    
+    # If only testing naming, exit early
+    if args.test_naming:
+        logger.info("Generated naming convention documentation. Exiting.")
+        return
     
     # Quick test mode for debugging
     if args.quick_test:

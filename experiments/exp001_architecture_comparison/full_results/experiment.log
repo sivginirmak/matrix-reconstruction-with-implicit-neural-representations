@@ -1,0 +1,45 @@
+2025-09-11 22:10:35,311 - INFO - ================================================================================
+2025-09-11 22:10:35,311 - INFO - INR ARCHITECTURE COMPARISON EXPERIMENT
+2025-09-11 22:10:35,311 - INFO - ================================================================================
+2025-09-11 22:10:35,311 - INFO - Output directory: /Users/bmo/trc-projects/matrix-reconstruction-with-implicit-neural-representations/experiments/exp001_architecture_comparison/full_results
+2025-09-11 22:10:35,311 - INFO - Device: cpu
+2025-09-11 22:10:35,311 - INFO - Number of seeds: 5
+2025-09-11 22:10:35,311 - INFO - Generated model naming convention documentation
+2025-09-11 22:10:35,311 - INFO - Generated 78 experiment configurations
+2025-09-11 22:10:35,311 - INFO - Starting experimental suite: 78 configs × 5 seeds = 390 total experiments
+2025-09-11 22:10:35,311 - INFO - Running configuration 1/78: K-planes(multiply)-linear
+2025-09-11 22:18:08,799 - INFO - Running configuration 2/78: K-planes(multiply)-nonconvex
+2025-09-11 22:28:19,292 - INFO - Running configuration 3/78: K-planes(add)-linear
+2025-09-11 22:36:00,541 - INFO - Running configuration 4/78: K-planes(add)-nonconvex
+2025-09-11 22:45:19,912 - INFO - Running configuration 5/78: K-planes(multiply)-linear
+2025-09-11 22:52:42,861 - INFO - Running configuration 6/78: K-planes(multiply)-nonconvex
+2025-09-11 23:11:22,651 - INFO - Running configuration 7/78: K-planes(add)-linear
+2025-09-11 23:18:48,982 - INFO - Running configuration 8/78: K-planes(add)-nonconvex
+2025-09-11 23:28:05,038 - INFO - Running configuration 9/78: K-planes(multiply)-linear
+2025-09-11 23:36:57,024 - INFO - Running configuration 10/78: K-planes(multiply)-nonconvex
+2025-09-11 23:48:04,003 - INFO - Running configuration 11/78: K-planes(add)-linear
+2025-09-11 23:56:33,315 - INFO - Running configuration 12/78: K-planes(add)-nonconvex
+2025-09-12 00:06:36,138 - INFO - Running configuration 13/78: K-planes(multiply)-linear
+2025-09-12 00:24:08,046 - INFO - Running configuration 14/78: K-planes(multiply)-nonconvex
+2025-09-12 00:43:41,097 - INFO - Running configuration 15/78: K-planes(add)-linear
+2025-09-12 01:00:44,596 - INFO - Running configuration 16/78: K-planes(add)-nonconvex
+2025-09-12 01:19:06,941 - INFO - Running configuration 17/78: K-planes(multiply)-linear
+2025-09-12 01:35:42,389 - INFO - Running configuration 18/78: K-planes(multiply)-nonconvex
+2025-09-12 01:54:17,833 - INFO - Running configuration 19/78: K-planes(add)-linear
+2025-09-12 02:10:34,086 - INFO - Running configuration 20/78: K-planes(add)-nonconvex
+2025-09-12 02:28:49,957 - INFO - Running configuration 21/78: K-planes(multiply)-linear
+2025-09-12 02:45:44,264 - INFO - Running configuration 22/78: K-planes(multiply)-nonconvex
+2025-09-12 03:04:38,949 - INFO - Running configuration 23/78: K-planes(add)-linear
+2025-09-12 03:21:13,491 - INFO - Running configuration 24/78: K-planes(add)-nonconvex
+2025-09-12 03:39:48,290 - INFO - Running configuration 25/78: K-planes(multiply)-linear
+2025-09-12 04:11:45,138 - INFO - Running configuration 26/78: K-planes(multiply)-nonconvex
+2025-09-12 04:46:06,489 - INFO - Running configuration 27/78: K-planes(add)-linear
+2025-09-12 05:17:30,452 - INFO - Running configuration 28/78: K-planes(add)-nonconvex
+2025-09-12 05:51:07,498 - INFO - Running configuration 29/78: K-planes(multiply)-linear
+2025-09-12 06:23:35,938 - INFO - Running configuration 30/78: K-planes(multiply)-nonconvex
+2025-09-12 06:58:24,144 - INFO - Running configuration 31/78: K-planes(add)-linear
+2025-09-12 07:30:17,837 - INFO - Running configuration 32/78: K-planes(add)-nonconvex
+2025-09-12 08:04:25,761 - INFO - Running configuration 33/78: K-planes(multiply)-linear
+2025-09-12 08:38:15,816 - INFO - Running configuration 34/78: K-planes(multiply)-nonconvex
+2025-09-12 09:14:26,084 - INFO - Running configuration 35/78: K-planes(add)-linear
+2025-09-12 09:47:47,876 - INFO - Running configuration 36/78: K-planes(add)-nonconvex

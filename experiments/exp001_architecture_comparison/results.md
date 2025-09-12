@@ -9,10 +9,16 @@ This experiment implements a systematic comparison of Implicit Neural Representa
 **Primary Hypothesis**: K-Planes architectures will achieve >5dB PSNR improvement over NeRF for 2D matrix reconstruction due to explicit geometric bias toward planar structures.
 
 **Architecture Variants Tested**:
-- **K-Planes Multiplicative**: f_u * f_v + f_plane (explicit factorization)  
-- **K-Planes Additive**: f_u + f_v + f_plane (linear combination)
-- **NeRF Standard**: ReLU-based MLP with coordinate encoding
-- **NeRF SIREN**: Sinusoidal activation-based continuous representation
+
+- **K-planes**: Models using ONLY line features (f_u, f_v)
+  - K-planes(multiply): decoder(f_u * f_v) 
+  - K-planes(add): decoder(f_u + f_v)
+- **GA-Planes**: Models with line features AND low-resolution plane features
+  - GA-Planes(multiply+plane): decoder(f_u * f_v + f_plane)
+  - GA-Planes(add+plane): decoder(f_u + f_v + f_plane)
+- **NeRF**: Coordinate-based models with deeper MLPs
+  - NeRF(nonconvex): Standard ReLU-based deep network (now with 4 layers)
+  - NeRF(siren): SIREN-based with sinusoidal activations (4 layers)
 
 **Decoder Types**:
 - **Linear**: Direct linear mapping from features to pixel values
@@ -152,6 +158,27 @@ Based on architectural analysis and initial training behavior:
 1. **Subset Analysis**: Core hypothesis testable with reduced configuration matrix
 2. **Progressive Validation**: Incremental testing with increasing complexity
 3. **Alternative Metrics**: Parameter efficiency analysis provides additional validation
+
+## Recent Updates (Based on Feedback)
+
+1. **Improved Model Naming**: 
+   - K-planes now refers ONLY to models with line features (no plane features)
+   - GA-Planes refers to models with both line and plane features
+   - This accurately reflects the architectural differences
+
+2. **Deeper NeRF Networks**: 
+   - NeRF models now use 4-layer MLPs (increased from 2) for fairer comparison
+   - This matches typical NeRF architectures in literature
+
+3. **Visualization During Training**:
+   - Added reconstruction visualization every 200 epochs
+   - Saves progress images showing reconstruction quality over time
+   - Includes error heatmaps for better analysis
+
+4. **Grid-based Model Note**:
+   - The K-planes/GA-Planes implementations follow the grid-based model structure
+   - Line features use 1D grid sampling along axes
+   - Plane features (GA-Planes only) use 2D grid sampling
 
 ## Conclusion
 

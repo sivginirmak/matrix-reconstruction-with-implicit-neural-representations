@@ -1,0 +1,11 @@
+numpy
+pandas
+matplotlib
+seaborn
+torch>=2.0.0
+scikit-image
+tqdm
+scipy
+pingouin
+scikit-learn
+Pillow
