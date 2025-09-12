@@ -485,7 +485,7 @@ def run_experiment_suite(output_dir: Path, num_seeds: int = 3) -> pd.DataFrame:
     logger.info(f"Starting experimental suite: {len(configs)} configs × {num_seeds} seeds = {len(configs) * num_seeds} total experiments")
     
     for i, config in enumerate(configs):
-        logger.info(f"Running configuration {i+1}/{len(configs)}: {config['model_name']}-{config['decoder']}")
+        logger.info(f"Running configuration {i+1}/{len(configs)}: {config['model_name']}-{config['decoder']} (feat_dim={config['feature_dim']}, line_res={config['line_resolution']})")
         
         for seed in range(num_seeds):
             try:
