@@ -87,7 +87,7 @@ features \= MLP(coordinate\_encoding(x, y))
 **Execution Results**:
 
 * Completed: 180 experiments (36 K-planes configurations × 5 seeds)
-* Execution runtime: ~11.5 hours (stopped at configuration 37/78)
+* Execution runtime: \~11.5 hours (stopped at configuration 37/78)
 * Architecture coverage: K-planes only (GA-Planes and NeRF experiments pending)
 * Average training time: 10-30 minutes per configuration depending on complexity
 
@@ -103,14 +103,15 @@ features \= MLP(coordinate\_encoding(x, y))
 
 * **K-Planes (multiply) + Nonconvex**: **32.25 dB** (Best) - Mean: 27.43 ± 2.42 dB
 * **K-Planes (multiply) + Linear**: Mean: 22.14 ± 2.66 dB
-* **K-Planes (add) + Nonconvex**: Mean: 21.60 ± 1.43 dB  
+* **K-Planes (add) + Nonconvex**: Mean: 21.60 ± 1.43 dB
 * **K-Planes (add) + Linear**: **12.08 dB** (Worst) - Mean: 12.08 ± 0.02 dB
 
 **Key Observations**:
-- Multiplicative feature combination significantly outperforms additive (5.83 dB mean difference)
-- Nonconvex decoders outperform linear decoders by 7.40 dB on average
-- Higher feature dimensions (128) and resolutions (128) improve reconstruction quality
-- Best configuration achieves 32.25 dB PSNR, demonstrating strong reconstruction capability
+
+* Multiplicative feature combination significantly outperforms additive (5.83 dB mean difference)
+* Nonconvex decoders outperform linear decoders by 7.40 dB on average
+* Higher feature dimensions (128) and resolutions (128) improve reconstruction quality
+* Best configuration achieves 32.25 dB PSNR, demonstrating strong reconstruction capability
 
 **Statistical Significance**: Cannot fully evaluate primary hypothesis (K-Planes vs NeRF) as NeRF experiments were not completed
 
@@ -119,7 +120,7 @@ features \= MLP(coordinate\_encoding(x, y))
 **Performance by Feature Dimensions and Resolution**:
 
 | Feature Dim | Line Resolution | Mean PSNR (dB) | Experiments |
-|-------------|-----------------|----------------|-------------|
+| ----------- | --------------- | -------------- | ----------- |
 | 32          | 32              | 18.73          | 20          |
 | 32          | 64              | 20.47          | 20          |
 | 32          | 128             | 21.50          | 20          |
@@ -132,10 +133,10 @@ features \= MLP(coordinate\_encoding(x, y))
 
 **Decoder Type Comparison**:
 
-| Decoder    | Mean PSNR | Std Dev | Min PSNR | Max PSNR |
-|------------|-----------|---------|----------|----------|
-| Linear     | 17.11 dB  | 5.40    | 12.05 dB | 26.20 dB |
-| Nonconvex  | 24.52 dB  | 3.53    | 19.21 dB | 32.25 dB |
+| Decoder   | Mean PSNR | Std Dev | Min PSNR | Max PSNR |
+| --------- | --------- | ------- | -------- | -------- |
+| Linear    | 17.11 dB  | 5.40    | 12.05 dB | 26.20 dB |
+| Nonconvex | 24.52 dB  | 3.53    | 19.21 dB | 32.25 dB |
 
 #### Scientific Contributions
 
