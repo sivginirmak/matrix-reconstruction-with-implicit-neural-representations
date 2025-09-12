@@ -45,3 +45,5 @@
 2025-09-12 09:47:47,876 - INFO - Running configuration 36/78: K-planes(add)-nonconvex
 2025-09-12 10:26:03,889 - INFO - Running configuration 37/78: GA-Planes(multiply+plane)-linear
 2025-09-12 10:38:16,737 - INFO - Running configuration 38/78: GA-Planes(multiply+plane)-nonconvex
+2025-09-12 10:52:19,950 - INFO - Running configuration 39/78: GA-Planes(add+plane)-linear
+2025-09-12 11:04:32,577 - INFO - Running configuration 40/78: GA-Planes(add+plane)-nonconvex
