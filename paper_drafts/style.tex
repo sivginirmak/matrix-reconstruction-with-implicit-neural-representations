@@ -1,0 +1,88 @@
+% Style definitions for Agents4Science conference paper
+% Based on CVPR template with modifications for scientific research presentation
+
+% Color definitions for consistent formatting
+\definecolor{darkblue}{rgb}{0.0,0.0,0.5}
+\definecolor{darkgreen}{rgb}{0.0,0.5,0.0}
+\definecolor{darkred}{rgb}{0.5,0.0,0.0}
+
+% Mathematical notation shortcuts
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\CC}{\mathbb{C}}
+
+% Architecture notation
+\newcommand{\kplanes}{\texttt{K-Planes}}
+\newcommand{\gaplanes}{\texttt{GA-Planes}}
+\newcommand{\nerf}{\texttt{NeRF}}
+
+% Function definitions
+\newcommand{\decoder}{\text{decoder}}
+\newcommand{\encoder}{\text{encoder}}
+\newcommand{\MLP}{\text{MLP}}
+
+% Vector and matrix notation
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+\newcommand{\mat}[1]{\mathbf{#1}}
+
+% Statistical notation
+\newcommand{\psnr}{\text{PSNR}}
+\newcommand{\mse}{\text{MSE}}
+\newcommand{\mae}{\text{MAE}}
+
+% Parameter notation
+\newcommand{\params}{\theta}
+\newcommand{\features}{f}
+
+% Coordinate notation
+\newcommand{\coord}[2]{(#1, #2)}
+\newcommand{\pixel}[2]{M_{#1,#2}}
+
+% Table formatting helpers
+\newcommand{\tabhead}[1]{\textbf{#1}}
+\newcommand{\best}[1]{\textbf{#1}}
+
+% Algorithm formatting
+\newcommand{\algname}[1]{\textsc{#1}}
+
+% Reference shortcuts
+\newcommand{\figref}[1]{Figure~\ref{#1}}
+\newcommand{\tabref}[1]{Table~\ref{#1}}
+\newcommand{\eqref}[1]{Equation~\ref{#1}}
+\newcommand{\secref}[1]{Section~\ref{#1}}
+
+% Emphasis commands
+\newcommand{\empha}[1]{\textbf{#1}}
+\newcommand{\emphb}[1]{\textit{#1}}
+
+% Units and measurements
+\newcommand{\db}{\text{ dB}}
+\newcommand{\pct}{\%}
+
+% Quality assurance markers (remove in final version)
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+\newcommand{\check}[1]{\textcolor{blue}{[CHECK: #1]}}
+
+% Page layout adjustments for conference format
+\setlength{\textfloatsep}{0.8\baselineskip plus 0.2\baselineskip minus 0.5\baselineskip}
+\setlength{\intextsep}{0.8\baselineskip plus 0.2\baselineskip minus 0.5\baselineskip}
+
+% Caption formatting
+\usepackage[font=small,labelfont=bf,textfont=it]{caption}
+
+% Bibliography formatting
+\bibliographystyle{ieee_fullname}
+
+% Hyperref setup (should be last)
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=darkblue,
+    citecolor=darkgreen,
+    urlcolor=darkred,
+    pdftitle={Comparative Analysis of INRs for 2D Matrix Reconstruction},
+    pdfauthor={Anonymous Authors},
+    pdfsubject={Implicit Neural Representations, Matrix Reconstruction},
+    pdfkeywords={INR, K-Planes, NeRF, Matrix Completion}
+}
