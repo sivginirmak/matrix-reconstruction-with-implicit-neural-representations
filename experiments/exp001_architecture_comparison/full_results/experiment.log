@@ -47,3 +47,61 @@
 2025-09-12 10:38:16,737 - INFO - Running configuration 38/78: GA-Planes(multiply+plane)-nonconvex
 2025-09-12 10:52:19,950 - INFO - Running configuration 39/78: GA-Planes(add+plane)-linear
 2025-09-12 11:04:32,577 - INFO - Running configuration 40/78: GA-Planes(add+plane)-nonconvex
+2025-09-12 11:19:03,982 - INFO - Running configuration 41/78: GA-Planes(multiply+plane)-linear
+2025-09-12 11:30:55,897 - INFO - Running configuration 42/78: GA-Planes(multiply+plane)-nonconvex
+2025-09-12 11:45:06,159 - INFO - Running configuration 43/78: GA-Planes(add+plane)-linear
+2025-09-12 11:57:28,416 - INFO - Running configuration 44/78: GA-Planes(add+plane)-nonconvex
+2025-09-12 12:11:53,179 - INFO - Running configuration 45/78: GA-Planes(multiply+plane)-linear
+2025-09-12 12:25:38,471 - INFO - Running configuration 46/78: GA-Planes(multiply+plane)-nonconvex
+2025-09-12 12:41:23,944 - INFO - Running configuration 47/78: GA-Planes(add+plane)-linear
+2025-09-12 13:19:19,916 - INFO - Running configuration 48/78: GA-Planes(add+plane)-nonconvex
+2025-09-12 13:58:37,906 - INFO - Running configuration 49/78: GA-Planes(multiply+plane)-linear
+2025-09-12 14:32:11,983 - INFO - Running configuration 50/78: GA-Planes(multiply+plane)-nonconvex
+2025-09-12 15:20:22,421 - INFO - Running configuration 51/78: GA-Planes(add+plane)-linear
+2025-09-12 15:49:26,105 - INFO - Running configuration 52/78: GA-Planes(add+plane)-nonconvex
+2025-09-12 16:20:42,514 - INFO - Running configuration 53/78: GA-Planes(multiply+plane)-linear
+2025-09-12 16:49:27,107 - INFO - Running configuration 54/78: GA-Planes(multiply+plane)-nonconvex
+2025-09-12 17:20:10,502 - INFO - Running configuration 55/78: GA-Planes(add+plane)-linear
+2025-09-12 17:48:28,617 - INFO - Running configuration 56/78: GA-Planes(add+plane)-nonconvex
+2025-09-12 18:17:19,773 - INFO - Running configuration 57/78: GA-Planes(multiply+plane)-linear
+2025-09-12 18:48:33,947 - INFO - Running configuration 58/78: GA-Planes(multiply+plane)-nonconvex
+2025-09-12 19:21:41,042 - INFO - Running configuration 59/78: GA-Planes(add+plane)-linear
+2025-09-12 19:51:55,524 - INFO - Running configuration 60/78: GA-Planes(add+plane)-nonconvex
+2025-09-12 20:23:12,632 - INFO - Running configuration 61/78: GA-Planes(multiply+plane)-linear
+2025-09-12 21:13:40,307 - INFO - Running configuration 62/78: GA-Planes(multiply+plane)-nonconvex
+2025-09-12 22:06:20,558 - INFO - Running configuration 63/78: GA-Planes(add+plane)-linear
+2025-09-12 22:57:13,548 - INFO - Running configuration 64/78: GA-Planes(add+plane)-nonconvex
+2025-09-12 23:54:54,060 - INFO - Running configuration 65/78: GA-Planes(multiply+plane)-linear
+2025-09-13 00:52:11,792 - INFO - Running configuration 66/78: GA-Planes(multiply+plane)-nonconvex
+2025-09-13 01:47:50,572 - INFO - Running configuration 67/78: GA-Planes(add+plane)-linear
+2025-09-13 02:40:10,071 - INFO - Running configuration 68/78: GA-Planes(add+plane)-nonconvex
+2025-09-13 03:34:40,583 - INFO - Running configuration 69/78: GA-Planes(multiply+plane)-linear
+2025-09-13 04:33:34,261 - INFO - Running configuration 70/78: GA-Planes(multiply+plane)-nonconvex
+2025-09-13 05:34:54,582 - INFO - Running configuration 71/78: GA-Planes(add+plane)-linear
+2025-09-13 06:32:41,806 - INFO - Running configuration 72/78: GA-Planes(add+plane)-nonconvex
+2025-09-13 07:32:16,081 - INFO - Running configuration 73/78: NeRF(nonconvex)-nonconvex
+2025-09-13 07:36:43,420 - INFO - Running configuration 74/78: NeRF(siren)-siren
+2025-09-13 07:40:27,802 - INFO - Running configuration 75/78: NeRF(nonconvex)-nonconvex
+2025-09-13 07:47:51,199 - INFO - Running configuration 76/78: NeRF(siren)-siren
+2025-09-13 07:55:08,840 - INFO - Running configuration 77/78: NeRF(nonconvex)-nonconvex
+2025-09-13 08:08:48,518 - INFO - Running configuration 78/78: NeRF(siren)-siren
+2025-09-13 08:23:36,009 - INFO - Completed 390 experiments
+2025-09-13 08:23:36,009 - INFO - Performing statistical analysis...
+2025-09-13 08:23:36,017 - ERROR - Experiment failed: keys must be str, int, float, bool or None, not tuple
+Traceback (most recent call last):
+  File "/Users/bmo/trc-projects/matrix-reconstruction-with-implicit-neural-representations/experiments/exp001_architecture_comparison/main.py", line 790, in main
+    stats_results = statistical_analysis(df_results, output_dir)
+  File "/Users/bmo/trc-projects/matrix-reconstruction-with-implicit-neural-representations/experiments/exp001_architecture_comparison/main.py", line 621, in statistical_analysis
+    json.dump(stats_results, f, indent=2)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bmo/.pyenv/versions/3.13.0/lib/python3.13/json/__init__.py", line 179, in dump
+    for chunk in iterable:
+                 ^^^^^^^^
+  File "/Users/bmo/.pyenv/versions/3.13.0/lib/python3.13/json/encoder.py", line 432, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "/Users/bmo/.pyenv/versions/3.13.0/lib/python3.13/json/encoder.py", line 406, in _iterencode_dict
+    yield from chunks
+  File "/Users/bmo/.pyenv/versions/3.13.0/lib/python3.13/json/encoder.py", line 377, in _iterencode_dict
+    raise TypeError(f'keys must be str, int, float, bool or None, '
+                    f'not {key.__class__.__name__}')
+TypeError: keys must be str, int, float, bool or None, not tuple
