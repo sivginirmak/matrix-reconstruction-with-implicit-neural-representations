@@ -1,5 +1,5 @@
 \documentclass[10pt,twocolumn,letterpaper]{article}
-\usepackage{cvpr}
+\usepackage{agents4science_2025}
 \usepackage{times}
 \usepackage{epsfig}
 \usepackage{graphicx}
@@ -10,15 +10,8 @@
 \usepackage{xcolor}
 \usepackage{algorithm}
 \usepackage{algorithmic}
+\usepackage{url}
 
-% Include "final" option to remove page numbering for camera-ready
-\cvprfinalcopy
-
-\def\cvprPaperID{***} % *** Enter the CVPR Paper ID here
-\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
-
-% Pages are numbered in submission mode, and unnumbered in camera-ready
-\ifcvprfinal\pagestyle{empty}\fi
 \setcounter{page}{1}
 \begin{document}
 
@@ -40,9 +33,9 @@ Implicit Neural Representations (INRs) have shown remarkable success in 3D scene
 %%%%%%%%% BODY TEXT
 \section{Introduction}
 
-Implicit Neural Representations (INRs) have emerged as a powerful paradigm for continuous signal representation, achieving remarkable success in 3D scene reconstruction through methods like NeRF~\cite{mildenhall2020nerf}, K-Planes~\cite{fridovich2023kplanes}, and TensoRF~\cite{chen2022tensorf}. However, the adaptation of these architectures to 2D matrix reconstruction—a fundamental problem in image processing, collaborative filtering, and medical imaging—remains largely unexplored.
+Implicit Neural Representations (INRs) have emerged as a powerful paradigm for continuous signal representation, achieving remarkable success in 3D scene reconstruction through methods like NeRF~\cite{mildenhall2020nerf}, K-Planes~\cite{fridovich2023kplanes}, TensoRF~\cite{chen2022tensorf}, and InstantNGP~\cite{muller2022instant}. Recent advances have also explored multi-scale representations~\cite{barron2021mipnerf} and few-shot learning~\cite{yu2021pixelnerf}. However, the adaptation of these architectures to 2D matrix reconstruction—a fundamental problem in image processing, collaborative filtering, and medical imaging—remains largely unexplored.
 
-Traditional matrix completion methods rely on low-rank assumptions and nuclear norm minimization~\cite{candes2009matrix,recht2011simpler}, achieving theoretical guarantees but lacking the continuous representation benefits of neural approaches. Recent work has begun exploring INR applications to reconstruction tasks~\cite{zhang2025lorein,shi2024inr}, yet no systematic comparison exists between different INR architectures for 2D matrix problems.
+Traditional matrix completion methods rely on low-rank assumptions and nuclear norm minimization~\cite{candes2009matrix,recht2011simpler}, achieving theoretical guarantees but lacking the continuous representation benefits of neural approaches. Recent work has begun exploring INR applications to reconstruction tasks~\cite{zhang2025lorein,shi2024inr,li2025imputeinr,rao2025cristal}, with applications ranging from medical imaging to time series imputation. Neural compression approaches~\cite{dupont2021coin,strumpler2022implicit} have also demonstrated the potential of INRs for efficient data representation, yet no systematic comparison exists between different INR architectures for 2D matrix problems.
 
 This work addresses a fundamental question: how do different INR architectures perform when adapted from 3D scene reconstruction to 2D matrix reconstruction? Our central hypothesis is that \textbf{planar factorization methods (K-Planes) will demonstrate superior reconstruction quality compared to coordinate-based approaches (NeRF) for 2D matrix reconstruction, due to their explicit geometric bias toward planar structures}.
 
@@ -70,7 +63,7 @@ GA-Planes~\cite{sivgin2024gaplanes} recently introduced the first convex optimiz
 
 Classical matrix completion theory~\cite{candes2009matrix,recht2011simpler} establishes that low-rank matrices can be exactly recovered from sparse observations via nuclear norm minimization under incoherence conditions. These methods provide strong theoretical foundations but are limited by discrete representations and lack natural interpolation capabilities.
 
-Recent work has begun exploring the intersection of neural representations and matrix completion. Zhang et al.~\cite{zhang2025lorein} combined low-rank priors with INR continuity priors in medical imaging, while Li et al.~\cite{li2025imputeinr} demonstrated INR effectiveness for time series imputation tasks similar to matrix completion.
+Recent work has begun exploring the intersection of neural representations and matrix completion. Zhang et al.~\cite{zhang2025lorein} combined low-rank priors with INR continuity priors in medical imaging, while Li et al.~\cite{li2025imputeinr} demonstrated INR effectiveness for time series imputation tasks similar to matrix completion. Cheng et al.~\cite{cheng2025lowrank} developed low-rank INR formulations using Schatten-p quasi-norms, and Li et al.~\cite{li2025mgir} proposed mixed-granularity representations for hyperspectral reconstruction. Multi-scale approaches~\cite{han2023nrff} and domain-specific constraints~\cite{rao2025cristal} have further expanded the applicability of INRs to reconstruction problems.
 
 \section{Methodology}
 
@@ -124,13 +117,13 @@ Our experimental framework implements rigorous statistical testing following ML 
 
 \textbf{Statistical Analysis:} Each configuration is evaluated across 5 random seeds with independent t-tests, Mann-Whitney U tests, and Cohen's d effect size calculations to ensure statistical rigor.
 
-\textbf{Training Protocol:} All models are trained for 1000 epochs using Adam optimizer on the 512×512 astronaut image from scikit-image, with MSE loss and PSNR evaluation every 100 epochs.
+\textbf{Training Protocol:} All models are trained for 1000 epochs using Adam optimizer on the 512×512 astronaut image from scikit-image, with MSE loss and PSNR evaluation every 100 epochs. While this work focuses on single image analysis for controlled comparison, the methodology is designed to extend to diverse datasets including BSD100~\cite{martin2001database} and real-world image collections~\cite{reizenstein2021common}.
 
 \section{Results}
 
 \subsection{Primary Hypothesis Validation}
 
-Our experiments provide strong evidence for the superiority of planar factorization over coordinate-based approaches. Table~\ref{tab:primary_results} presents the comprehensive comparison across all architecture families:
+Our experiments provide strong evidence for the superiority of planar factorization over coordinate-based approaches. Table~\ref{tab:primary_results} presents the comprehensive comparison across all architecture families, while Figure~\ref{fig:architecture_comparison} shows visual reconstruction examples demonstrating the qualitative differences between methods.
 
 \begin{table}[t]
 \centering
@@ -160,6 +153,13 @@ Our experiments provide strong evidence for the superiority of planar factorizat
 \end{table}
 
 \textbf{Key Finding}: K-Planes (multiply, nonconvex) achieves 27.43±2.42 dB compared to NeRF's best of 12.41±0.41 dB, representing a \textbf{15.02 dB improvement} with statistical significance $p < 0.001$ and Cohen's d = 8.9 (extremely large effect size).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/architecture_comparison.png}
+\caption{Visual comparison of reconstruction quality across different INR architectures on the 512×512 astronaut test image. K-Planes (multiply, nonconvex) produces the highest quality reconstruction with sharp detail preservation, while NeRF variants show significant blurring and artifacts. The visualization demonstrates the qualitative superiority of planar factorization over coordinate-based encoding.}
+\label{fig:architecture_comparison}
+\end{figure}
 
 \subsection{Feature Combination Analysis}
 
@@ -305,7 +305,7 @@ We present the first comprehensive comparison of INR architectures for 2D matrix
 
 %%%%%%%%% REFERENCES
 \small
-\bibliographystyle{ieee_fullname}
+\bibliographystyle{plain}
 \bibliography{references}
 
 \end{document}
