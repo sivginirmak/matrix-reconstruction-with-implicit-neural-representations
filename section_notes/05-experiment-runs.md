@@ -91,10 +91,10 @@ features \= MLP(coordinate\_encoding(x, y))
 * Dataset: Scikit-image astronaut (512×512, grayscale)
 * Training epochs: 1000 per configuration
 * Configurations tested per architecture:
-  - K-Planes (multiply/add) × (linear/nonconvex): 180 experiments (45 each)
-  - GA-Planes (multiply+plane/add+plane) × (linear/nonconvex): 180 experiments (45 each)
-  - NeRF (nonconvex): 15 experiments (3 configurations × 5 seeds)
-  - NeRF (SIREN): 15 experiments (3 configurations × 5 seeds)
+  * K-Planes (multiply/add) × (linear/nonconvex): 180 experiments (45 each)
+  * GA-Planes (multiply+plane/add+plane) × (linear/nonconvex): 180 experiments (45 each)
+  * NeRF (nonconvex): 15 experiments (3 configurations × 5 seeds)
+  * NeRF (SIREN): 15 experiments (3 configurations × 5 seeds)
 
 #### Key Findings
 
@@ -120,87 +120,83 @@ features \= MLP(coordinate\_encoding(x, y))
 **Key Observations**:
 
 1. **Primary Hypothesis Validated**: K-Planes architectures (both variants) significantly outperform NeRF:
-   - K-Planes (multiply) + Nonconvex vs NeRF (Nonconvex): **+15.85 dB improvement**
-   - K-Planes (multiply) + Nonconvex vs NeRF (SIREN): **+15.02 dB improvement**
-   - Even worst K-Planes configuration outperforms best NeRF by ~0.5 dB
-
+   * K-Planes (multiply) + Nonconvex vs NeRF (Nonconvex): **+15.85 dB improvement**
+   * K-Planes (multiply) + Nonconvex vs NeRF (SIREN): **+15.02 dB improvement**
+   * Even worst K-Planes configuration outperforms best NeRF by \~0.5 dB
 2. **Architecture Design Insights**:
-   - Multiplicative feature combination outperforms additive across all architectures
-   - GA-Planes performs comparably to K-Planes (within 0.24 dB)
-   - Plane features provide marginal benefit when using multiplicative combination
-
+   * Multiplicative feature combination outperforms additive across all architectures
+   * GA-Planes performs comparably to K-Planes (within 0.24 dB)
+   * Plane features provide marginal benefit when using multiplicative combination
 3. **Decoder Impact**:
-   - Nonconvex decoders consistently outperform linear decoders
-   - Effect is most pronounced in K-Planes architectures (5-15 dB improvement)
-
+   * Nonconvex decoders consistently outperform linear decoders
+   * Effect is most pronounced in K-Planes architectures (5-15 dB improvement)
 4. **Parameter Efficiency**:
-   - K-Planes: 11.2K-16.1K parameters
-   - GA-Planes: 44.7K-49.5K parameters
-   - NeRF: 22.0K-26.9K parameters
-   - K-Planes achieves best quality with fewest parameters
+   * K-Planes: 11.2K-16.1K parameters
+   * GA-Planes: 44.7K-49.5K parameters
+   * NeRF: 22.0K-26.9K parameters
+   * K-Planes achieves best quality with fewest parameters
 
 **Statistical Significance**:
 
 * **Primary Hypothesis (K-Planes vs NeRF)**: ✅ **STRONGLY VALIDATED**
-  - K-Planes (multiply, nonconvex) vs NeRF (best): t-statistic = 45.2, p < 0.001
-  - Effect size (Cohen's d): 8.9 (extremely large effect)
-  - 95% CI for difference: [14.8, 16.9] dB
-
+  * K-Planes (multiply, nonconvex) vs NeRF (best): t-statistic \= 45.2, p < 0.001
+  * Effect size (Cohen's d): 8.9 (extremely large effect)
+  * 95% CI for difference: \[14.8, 16.9] dB
 * **Architecture Comparisons**:
-  - K-Planes vs GA-Planes: No significant difference (p = 0.72)
-  - Multiplicative vs Additive: Significant (p < 0.001, d = 2.1)
-  - Nonconvex vs Linear: Significant (p < 0.001, d = 3.4)
+  * K-Planes vs GA-Planes: No significant difference (p \= 0.72)
+  * Multiplicative vs Additive: Significant (p < 0.001, d \= 2.1)
+  * Nonconvex vs Linear: Significant (p < 0.001, d \= 3.4)
 
 #### Detailed Experimental Results
 
 **Complete Architecture Performance Summary**:
 
-| Architecture | Operation | Decoder | Mean PSNR | Std Dev | Min PSNR | Max PSNR | Param Count | Training Time (s) |
-| ------------ | --------- | ------- | --------- | ------- | -------- | -------- | ----------- | ----------------- |
-| GA-Planes | add+plane | linear | 16.62 | 2.06 | 14.23 | 19.22 | 44.7K | 414.3 ± 274.1 |
-| GA-Planes | add+plane | nonconvex | 22.31 | 3.54 | 17.05 | 28.49 | 49.5K | 441.3 ± 215.3 |
-| GA-Planes | multiply+plane | linear | 22.25 | 2.62 | 19.08 | 25.80 | 44.7K | 396.8 ± 215.8 |
-| GA-Planes | multiply+plane | nonconvex | 27.67 | 2.61 | 23.13 | 31.00 | 49.5K | 433.7 ± 247.9 |
-| K-Planes | add | linear | 12.08 | 0.02 | 12.05 | 12.10 | 11.2K | 226.4 ± 122.4 |
-| K-Planes | add | nonconvex | 21.60 | 1.43 | 19.21 | 23.52 | 16.1K | 252.6 ± 130.8 |
-| K-Planes | multiply | linear | 22.14 | 2.66 | 18.99 | 26.20 | 11.2K | 230.3 ± 124.7 |
-| K-Planes | multiply | nonconvex | 27.43 | 2.42 | 23.86 | 32.25 | 16.1K | 269.3 ± 138.8 |
-| NeRF | - | nonconvex | 11.58 | 1.31 | 10.68 | 13.36 | 26.9K | 101.6 ± 47.7 |
-| NeRF | - | siren | 12.41 | 0.41 | 11.92 | 12.89 | 22.0K | 102.9 ± 57.2 |
+| Architecture | Operation      | Decoder   | Mean PSNR | Std Dev | Min PSNR | Max PSNR | Param Count | Training Time (s) |
+| ------------ | -------------- | --------- | --------- | ------- | -------- | -------- | ----------- | ----------------- |
+| GA-Planes    | add+plane      | linear    | 16.62     | 2.06    | 14.23    | 19.22    | 44.7K       | 414.3 ± 274.1     |
+| GA-Planes    | add+plane      | nonconvex | 22.31     | 3.54    | 17.05    | 28.49    | 49.5K       | 441.3 ± 215.3     |
+| GA-Planes    | multiply+plane | linear    | 22.25     | 2.62    | 19.08    | 25.80    | 44.7K       | 396.8 ± 215.8     |
+| GA-Planes    | multiply+plane | nonconvex | 27.67     | 2.61    | 23.13    | 31.00    | 49.5K       | 433.7 ± 247.9     |
+| K-Planes     | add            | linear    | 12.08     | 0.02    | 12.05    | 12.10    | 11.2K       | 226.4 ± 122.4     |
+| K-Planes     | add            | nonconvex | 21.60     | 1.43    | 19.21    | 23.52    | 16.1K       | 252.6 ± 130.8     |
+| K-Planes     | multiply       | linear    | 22.14     | 2.66    | 18.99    | 26.20    | 11.2K       | 230.3 ± 124.7     |
+| K-Planes     | multiply       | nonconvex | 27.43     | 2.42    | 23.86    | 32.25    | 16.1K       | 269.3 ± 138.8     |
+| NeRF         | -              | nonconvex | 11.58     | 1.31    | 10.68    | 13.36    | 26.9K       | 101.6 ± 47.7      |
+| NeRF         | -              | siren     | 12.41     | 0.41    | 11.92    | 12.89    | 22.0K       | 102.9 ± 57.2      |
 
 **Performance by Feature Dimensions and Resolution** (K-Planes/GA-Planes only):
 
 | Architecture | Feature Dim | Line Res | Plane Res | Mean PSNR | Count |
 | ------------ | ----------- | -------- | --------- | --------- | ----- |
-| K-Planes | 32 | 32 | - | 17.48 | 20 |
-| K-Planes | 32 | 64 | - | 19.40 | 20 |
-| K-Planes | 32 | 128 | - | 20.49 | 20 |
-| K-Planes | 64 | 32 | - | 17.74 | 20 |
-| K-Planes | 64 | 64 | - | 19.63 | 20 |
-| K-Planes | 64 | 128 | - | 21.87 | 20 |
-| K-Planes | 128 | 32 | - | 18.36 | 20 |
-| K-Planes | 128 | 64 | - | 20.65 | 20 |
-| K-Planes | 128 | 128 | - | 22.13 | 20 |
-| GA-Planes | 32 | 32 | 8 | 20.17 | 20 |
-| GA-Planes | 32 | 64 | 16 | 21.61 | 20 |
-| GA-Planes | 32 | 128 | 32 | 22.51 | 20 |
-| GA-Planes | 64 | 32 | 8 | 20.26 | 20 |
-| GA-Planes | 64 | 64 | 16 | 21.70 | 20 |
-| GA-Planes | 64 | 128 | 32 | 23.71 | 20 |
-| GA-Planes | 128 | 32 | 8 | 20.74 | 20 |
-| GA-Planes | 128 | 64 | 16 | 22.53 | 20 |
-| GA-Planes | 128 | 128 | 32 | 23.93 | 20 |
+| K-Planes     | 32          | 32       | -         | 17.48     | 20    |
+| K-Planes     | 32          | 64       | -         | 19.40     | 20    |
+| K-Planes     | 32          | 128      | -         | 20.49     | 20    |
+| K-Planes     | 64          | 32       | -         | 17.74     | 20    |
+| K-Planes     | 64          | 64       | -         | 19.63     | 20    |
+| K-Planes     | 64          | 128      | -         | 21.87     | 20    |
+| K-Planes     | 128         | 32       | -         | 18.36     | 20    |
+| K-Planes     | 128         | 64       | -         | 20.65     | 20    |
+| K-Planes     | 128         | 128      | -         | 22.13     | 20    |
+| GA-Planes    | 32          | 32       | 8         | 20.17     | 20    |
+| GA-Planes    | 32          | 64       | 16        | 21.61     | 20    |
+| GA-Planes    | 32          | 128      | 32        | 22.51     | 20    |
+| GA-Planes    | 64          | 32       | 8         | 20.26     | 20    |
+| GA-Planes    | 64          | 64       | 16        | 21.70     | 20    |
+| GA-Planes    | 64          | 128      | 32        | 23.71     | 20    |
+| GA-Planes    | 128         | 32       | 8         | 20.74     | 20    |
+| GA-Planes    | 128         | 64       | 16        | 22.53     | 20    |
+| GA-Planes    | 128         | 128      | 32        | 23.93     | 20    |
 
 **Operation and Decoder Interaction**:
 
-| Operation | Decoder | Mean PSNR | Architectures Tested |
-| --------- | ------- | --------- | -------------------- |
-| Multiplicative | Linear | 22.20 | K-Planes, GA-Planes |
-| Multiplicative | Nonconvex | 27.55 | K-Planes, GA-Planes |
-| Additive | Linear | 14.35 | K-Planes, GA-Planes |
-| Additive | Nonconvex | 21.96 | K-Planes, GA-Planes |
-| Implicit | Nonconvex | 11.58 | NeRF |
-| Implicit | SIREN | 12.41 | NeRF |
+| Operation      | Decoder   | Mean PSNR | Architectures Tested |
+| -------------- | --------- | --------- | -------------------- |
+| Multiplicative | Linear    | 22.20     | K-Planes, GA-Planes  |
+| Multiplicative | Nonconvex | 27.55     | K-Planes, GA-Planes  |
+| Additive       | Linear    | 14.35     | K-Planes, GA-Planes  |
+| Additive       | Nonconvex | 21.96     | K-Planes, GA-Planes  |
+| Implicit       | Nonconvex | 11.58     | NeRF                 |
+| Implicit       | SIREN     | 12.41     | NeRF                 |
 
 #### Scientific Contributions
 
