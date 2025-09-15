@@ -1,5 +1,3 @@
-
-
 # Experiment Analyses - Enhanced with Fair Parameter Comparison
 
 ## Fair Comparison Methodology - Addressing Revision Request
@@ -8,18 +6,18 @@
 
 **Selected Configuration Set**:
 
-| **Architecture** | **PSNR (dB)** | **Parameters** | **Efficiency (dB/K)** | **Status** |
-|------------------|---------------|----------------|----------------------|------------|
-| **K-planes(multiply, nonconvex)** | **27.43 ± 2.42** | 16,058 | **1.708** | **Best Overall** |
-| **K-planes(multiply, linear)** | **22.14 ± 2.66** | 11,226 | **1.973** | **Most Efficient** |
-| K-planes(add, nonconvex) | 21.60 ± 1.43 | 16,058 | 1.345 | Competitive |
-| NeRF(siren) | 12.41 ± 0.41 | 22,028 | 0.563 | Baseline |
-| K-planes(add, linear) | 12.08 ± 0.02 | 11,226 | 1.076 | Reference |
+| **Architecture**                  | **PSNR (dB)**    | **Parameters** | **Efficiency (dB/K)** | **Status**         |
+| --------------------------------- | ---------------- | -------------- | --------------------- | ------------------ |
+| **K-planes(multiply, nonconvex)** | **27.43 ± 2.42** | 16,058         | **1.708**             | **Best Overall**   |
+| **K-planes(multiply, linear)**    | **22.14 ± 2.66** | 11,226         | **1.973**             | **Most Efficient** |
+| K-planes(add, nonconvex)          | 21.60 ± 1.43     | 16,058         | 1.345                 | Competitive        |
+| NeRF(siren)                       | 12.41 ± 0.41     | 22,028         | 0.563                 | Baseline           |
+| K-planes(add, linear)             | 12.08 ± 0.02     | 11,226         | 1.076                 | Reference          |
 
 **Parameter Range**: 10.8K spread (11K-22K) ensures architectural effects dominate performance differences.
 **Key Finding**: **15.35 dB performance spread** within matched parameter range proves architectural design impact.
 
----
+***
 
 # Original Analysis Enhanced with Fair Comparison
 
@@ -32,29 +30,27 @@
 **Evidence (Fair Comparison - Matched Parameters):**
 
 * **Parameter-Matched**: K-planes(multiply, linear) 22.14 dB vs NeRF(siren) 12.41 dB → **+9.73 dB** with 49% fewer parameters
-* **Best vs Best**: K-Planes (multiply, nonconvex) 27.43 ± 2.42 dB vs NeRF (best) 12.41 ± 0.41 dB → **+15.02 dB** 
+* **Best vs Best**: K-Planes (multiply, nonconvex) 27.43 ± 2.42 dB vs NeRF (best) 12.41 ± 0.41 dB → **+15.02 dB**
 * **Fair Comparison Validation**: Architectural advantage persists across matched parameter configurations
-* Statistical significance: p < 0.001, Cohen's d = 8.9 (extremely large effect)
-* 95% CI for difference: [14.8, 16.9] dB
+* Statistical significance: p < 0.001, Cohen's d \= 8.9 (extremely large effect)
+* 95% CI for difference: \[14.8, 16.9] dB
 * **Parameter Efficiency**: K-Planes 1.97 dB/K vs NeRF 0.56 dB/K (3.5x improvement)
 
 ## Pareto Frontier Analysis - Size vs PSNR
 
-*[Visualization: pareto_analysis.png - Compression Ratio vs PSNR scatter plot]*
+*\[Visualization: pareto\_analysis.png - Compression Ratio vs PSNR scatter plot]*
 
 **Three Pareto Optimal Architectures Identified:**
 
 1. **K-planes(multiply, nonconvex)**: **27.43 dB, 16.3x compression** ⭐ *Optimal Balance*
-   - Best efficiency trade-off: high PSNR with strong compression
-   - 16.1K parameters, 1.708 dB/K parameter efficiency
-
-2. **GA-Planes(multiply+plane, nonconvex)**: 27.67 dB, 5.3x compression  
-   - Highest PSNR but poor compression efficiency
-   - 49.5K parameters for marginal +0.24 dB improvement
-
+   * Best efficiency trade-off: high PSNR with strong compression
+   * 16.1K parameters, 1.708 dB/K parameter efficiency
+2. **GA-Planes(multiply+plane, nonconvex)**: 27.67 dB, 5.3x compression
+   * Highest PSNR but poor compression efficiency
+   * 49.5K parameters for marginal +0.24 dB improvement
 3. **K-planes(multiply, linear)**: 22.14 dB, 23.4x compression
-   - Maximum compression with acceptable PSNR
-   - 11.2K parameters, 1.973 dB/K efficiency
+   * Maximum compression with acceptable PSNR
+   * 11.2K parameters, 1.973 dB/K efficiency
 
 **Key Insight**: The "parameter gap problem" is actually **the main finding** - K-planes achieves superior performance through architectural efficiency, not just parameter reduction.
 
@@ -69,14 +65,14 @@
 
 ## Performance vs Baselines - Enhanced with Statistical Verification
 
-| Architecture | PSNR (dB) | Parameters | Efficiency (dB/K) | Compression | Pareto Optimal |
-|--------------|-----------|------------|------------------|-------------|----------------|
-| **K-planes(multiply, nonconvex)** | **27.43 ± 2.42** | 16.1K | **1.708** | **16.3x** | ✓ |
-| GA-Planes(multiply+plane, nonconvex) | 27.67 ± 2.61 | 49.5K | 0.559 | 5.3x | ✓ |
-| K-planes(multiply, linear) | 22.14 ± 2.66 | 11.2K | **1.973** | **23.4x** | ✓ |
-| GA-Planes(multiply+plane, linear) | 22.25 ± 2.62 | 44.7K | 0.498 | 5.9x | |
-| NeRF(SIREN) | 12.41 ± 0.41 | 22.0K | 0.563 | 11.9x | |
-| NeRF(nonconvex) | 11.58 ± 1.31 | 26.9K | 0.431 | 9.8x | |
+| Architecture                         | PSNR (dB)        | Parameters | Efficiency (dB/K) | Compression | Pareto Optimal |
+| ------------------------------------ | ---------------- | ---------- | ----------------- | ----------- | -------------- |
+| **K-planes(multiply, nonconvex)**    | **27.43 ± 2.42** | 16.1K      | **1.708**         | **16.3x**   | ✓              |
+| GA-Planes(multiply+plane, nonconvex) | 27.67 ± 2.61     | 49.5K      | 0.559             | 5.3x        | ✓              |
+| K-planes(multiply, linear)           | 22.14 ± 2.66     | 11.2K      | **1.973**         | **23.4x**   | ✓              |
+| GA-Planes(multiply+plane, linear)    | 22.25 ± 2.62     | 44.7K      | 0.498             | 5.9x        |                |
+| NeRF(SIREN)                          | 12.41 ± 0.41     | 22.0K      | 0.563             | 11.9x       |                |
+| NeRF(nonconvex)                      | 11.58 ± 1.31     | 26.9K      | 0.431             | 9.8x        |                |
 
 **Key Insights (Fair Comparison Verified):**
 
@@ -121,12 +117,13 @@
 3. **Efficiency Frontier**: K-Planes multiply achieves optimal PSNR/parameter trade-off across evaluated range
 4. **Architecture Scaling**: Performance differences persist across parameter budgets, suggesting fundamental design advantages
 
-**Statistical Robustness**: 
-- Coefficient of variation: 31.3% across matched configs confirms significant architectural impact
-- Effect sizes remain large (Cohen's d > 2.0) even with parameter matching
-- Fair comparison methodology prevents confounding parameter effects with architectural innovations
+**Statistical Robustness**:
 
-## Limitations - Critical Assessment (Enhanced)  
+* Coefficient of variation: 31.3% across matched configs confirms significant architectural impact
+* Effect sizes remain large (Cohen's d > 2.0) even with parameter matching
+* Fair comparison methodology prevents confounding parameter effects with architectural innovations
+
+## Limitations - Critical Assessment (Enhanced)
 
 * **Dataset Specificity**: Results validated only on astronaut image (natural photo)
   * Performance on synthetic patterns, medical images, or artistic content unknown
@@ -152,23 +149,24 @@
 3. **Fair Comparison Framework**: **Methodological contribution** - established parameter-matched comparison revealing architectural effects independent of model capacity, directly addressing revision request for matched size analysis.
 4. **Parameter Efficiency Metrics**: **Novel evaluation framework** - dB/K efficiency metrics enable fair architecture comparison, showing 3.5x difference between approaches.
 5. **Pareto Frontier Identification**: Identified optimal architectures balancing PSNR vs parameters within matched comparison sets.
-4. **Parameter Efficiency Quantification**: **K-planes achieves 2.7-4.6x higher efficiency** (1.7-2.0 dB/K parameters) than competing methods, critical for deployment scenarios.
-5. **Statistically Verified Design Principles**:
+6. **Parameter Efficiency Quantification**: **K-planes achieves 2.7-4.6x higher efficiency** (1.7-2.0 dB/K parameters) than competing methods, critical for deployment scenarios.
+7. **Statistically Verified Design Principles**:
    * Multiplicative feature combination > Additive (**7.95 dB** improvement - verified)
-   * Nonconvex decoders > Linear decoders (**3.84 dB** improvement - partially verified)  
+   * Nonconvex decoders > Linear decoders (**3.84 dB** improvement - partially verified)
    * Explicit factorization > Implicit encoding (15.02 dB improvement)
-6. **Comprehensive Experimental Framework**: Created reusable codebase for fair INR architecture comparisons with 360 experiments across multiple seeds.
-7. **Statistical Verification Protocol**: **Methodological contribution** - established framework for verifying research claims against raw experimental data.
+8. **Comprehensive Experimental Framework**: Created reusable codebase for fair INR architecture comparisons with 360 experiments across multiple seeds.
+9. **Statistical Verification Protocol**: **Methodological contribution** - established framework for verifying research claims against raw experimental data.
 
 ## Scientific Impact - Enhanced Assessment
 
 This work provides **statistically verified empirical evidence** that architectural design choices in INRs have profound impacts on reconstruction quality. The **15.02 dB improvement** of K-Planes over NeRF (3x the hypothesized magnitude) challenges the field to reconsider the role of explicit geometric priors versus universal approximation in neural representations.
 
 **Key Scientific Contributions:**
-- **Pareto frontier analysis** provides practical architecture selection framework
-- **Parameter efficiency metrics** (dB/K parameters) establish new evaluation standard  
-- **Statistical verification protocol** ensures research integrity
-- **Compression ratio analysis** addresses deployment considerations
+
+* **Pareto frontier analysis** provides practical architecture selection framework
+* **Parameter efficiency metrics** (dB/K parameters) establish new evaluation standard
+* **Statistical verification protocol** ensures research integrity
+* **Compression ratio analysis** addresses deployment considerations
 
 **Field Impact**: Results suggest architectural inductive bias can overcome universal approximation limitations, opening research directions toward **problem-specific neural architectures** rather than universal models.
 
@@ -190,7 +188,7 @@ This work provides **statistically verified empirical evidence** that architectu
 ### Applications (Long-term)
 
 1. **Neural Codec Development**: K-Planes as foundation for learnable compression standards
-2. **Real-time Continuous Representations**: Exploit parameter efficiency for mobile/edge deployment  
+2. **Real-time Continuous Representations**: Exploit parameter efficiency for mobile/edge deployment
 3. **Domain-Specific Extensions**: Medical imaging, satellite imagery, scientific visualization
 4. **Multi-Modal Integration**: Combine with text, audio for comprehensive content representation
 
@@ -201,10 +199,10 @@ This work provides **statistically verified empirical evidence** that architectu
 **Methodology Achievement**: Successfully isolated architectural effects by comparing configurations within 10K-25K parameter range
 
 **Key Validated Claims**:
-- ✅ K-Planes architectural superiority: +9.73 dB with parameter matching  
-- ✅ Multiplicative feature advantage: +5.83 to +10.06 dB across matched configs
-- ✅ Parameter efficiency differences: 3.5x between best K-Planes and NeRF approaches
-- ✅ Architectural design impact: 15.35 dB spread within matched parameter range
+
+* ✅ K-Planes architectural superiority: +9.73 dB with parameter matching
+* ✅ Multiplicative feature advantage: +5.83 to +10.06 dB across matched configs
+* ✅ Parameter efficiency differences: 3.5x between best K-Planes and NeRF approaches
+* ✅ Architectural design impact: 15.35 dB spread within matched parameter range
 
 **Scientific Impact**: Fair comparison framework prevents confounding parameter count with architectural innovation, establishing new standard for INR evaluation methodology.
-
