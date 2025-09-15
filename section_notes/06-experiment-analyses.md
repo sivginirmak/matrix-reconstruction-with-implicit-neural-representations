@@ -1,4 +1,4 @@
-Please update analysis with this&#x20;
+Please update analysis with this chart:&#x20;
 
 # Experiment Analyses
 
