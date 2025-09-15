@@ -6,7 +6,7 @@ This literature review examines the intersection of **Implicit Neural Representa
 
 **Research Focus:** Comparing 2D fitting performances of (normally 3D) INRs such as K-Planes, GA-Planes, NeRF etc. Since everything is based on 2D reconstruction, any open-source image dataset can be used & the approach is CPU-friendly.
 
-## Nearest Neighbor Paper (Core Reference)
+## CORE REFERENCE PAPER
 
 **Kim & Fridovich-Keil (2025)** - "Grids Often Outperform Implicit Neural Representations" provides **direct validation** of our research hypothesis. Their systematic comparison across 2D and 3D reconstruction tasks demonstrates that:
 
