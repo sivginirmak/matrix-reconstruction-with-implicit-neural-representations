@@ -13,6 +13,7 @@
 | K-planes(add, nonconvex)          | 21.60 ± 1.43     | 16,058         | 1.345                 | Competitive        |
 | NeRF(siren)                       | 12.41 ± 0.41     | 22,028         | 0.563                 | Baseline           |
 | K-planes(add, linear)             | 12.08 ± 0.02     | 11,226         | 1.076                 | Reference          |
+|                                   |                  |                |                       |                    |
 
 **Parameter Range**: 10.8K spread (11K-22K) ensures architectural effects dominate performance differences.
 **Key Finding**: **15.35 dB performance spread** within matched parameter range proves architectural design impact.
