@@ -2,7 +2,7 @@
 
 ## Fair Comparison Methodology&#x20;
 
-**Revision Addressed**: Selected 5 configurations with matched parameter sizes (10K-25K range) to ensure fair architectural comparison, isolating design effects from parameter count differences.
+&#x20;Selected 5 configurations with matched parameter sizes (10K-25K range) to ensure fair architectural comparison, isolating design effects from parameter count differences.
 
 **Selected Configuration Set**:
 
