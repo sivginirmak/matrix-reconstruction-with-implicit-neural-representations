@@ -1,6 +1,8 @@
 <REVISIONS>
-To make fair analysis with respect to the various parameters, please update this so that you choose 3-5 configs from exp001 results with almost matching sizes and looking at psnrs. and analyze to properly compare based on that! It's important to have a fair comparison btwn different architectures. 
+To make fair analysis with respect to the various parameters, please update this so that you choose 3-5 configs from exp001 results with almost matching sizes and looking at psnrs. and analyze to properly compare based on that! It's important to have a fair comparison btwn different architect
+
 </REVISIONS>
+
 
 
 # Experiment Analyses
