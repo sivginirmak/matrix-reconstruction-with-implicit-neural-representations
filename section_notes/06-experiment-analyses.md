@@ -123,7 +123,7 @@
 * Effect sizes remain large (Cohen's d > 2.0) even with parameter matching
 * Fair comparison methodology prevents confounding parameter effects with architectural innovations
 
-## Limitations - Critical Assessment (Enhanced)
+## Limitations - Critical Assessment
 
 * **Dataset Specificity**: Results validated only on astronaut image (natural photo)
   * Performance on synthetic patterns, medical images, or artistic content unknown
