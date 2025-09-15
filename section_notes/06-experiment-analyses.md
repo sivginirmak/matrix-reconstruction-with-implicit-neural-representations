@@ -1,3 +1,5 @@
+
+
 <REVISIONS>
 
 Please update analysis with this chart:&#x20;
@@ -126,3 +128,4 @@ This work provides strong empirical evidence that architectural design choices i
 4. **Real-time Rendering**: Low parameter count enables fast inference
 
 This research establishes K-Planes as a superior architecture for 2D reconstruction tasks and opens new avenues for efficient neural representations in computer vision and graphics.
+
