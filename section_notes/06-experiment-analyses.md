@@ -1,5 +1,5 @@
 <REVISIONS>
-To make fair analysis with respect to the various parameters, please update this so that you choose 3-5 configs from exp001 results with almost matching sizes and looking at psnrs
+To make fair analysis with respect to the various parameters, please update this so that you choose 3-5 configs with almost matching sizes and looking at psnrs
 
 </REVISIONS>
 
