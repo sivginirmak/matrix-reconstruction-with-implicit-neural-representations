@@ -1,8 +1,4 @@
-Please update analysis with this chart:&#x20;
-
-
-
-\- \*\*size vs PSNR\*\*
+Please update analysis with this chart: - \*\*size vs PSNR\*\*
 
 &#x9;\- y axis being PSNR, x axis being compression ratio or size
 
