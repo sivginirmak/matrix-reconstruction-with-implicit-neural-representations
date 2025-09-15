@@ -16,7 +16,7 @@
 \begin{document}
 
 %%%%%%%%% TITLE
-\title{K-Planes Outperform NeRF for 2D Matrix Reconstruction: Evidence from Planar Factorization vs. Implicit Coordinate Encoding}
+\title{Explicit vs Implicit Representations: A Systematic Comparison of GA-Planes, K-Planes, and NeRF for 2D Matrix Reconstruction}
 
 \author{Anonymous Authors\\
 Institution Name\\
@@ -27,7 +27,7 @@ Institution Name\\
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
-Implicit Neural Representations (INRs) have shown remarkable success in 3D scene reconstruction, but their effectiveness for 2D matrix reconstruction remains underexplored. We present the first systematic comparison of INR architectures—K-Planes, GA-Planes, and NeRF variants—adapted for 2D matrix reconstruction tasks. Our comprehensive evaluation across 360 experiments demonstrates that K-Planes with multiplicative feature combination and nonconvex decoders achieve 27.43±2.42 dB PSNR, substantially outperforming NeRF's best result of 12.41±0.41 dB by over 15 dB. This represents the largest performance gap ever demonstrated between INR architectures on reconstruction tasks. Our key finding is that explicit geometric priors in planar factorization provide fundamental advantages over implicit coordinate encoding for 2D domains. Additionally, we establish critical design principles: multiplicative feature combination outperforms additive by 7.5 dB, and nonconvex decoders surpass linear decoders by 6.9 dB. These results challenge current assumptions about INR architecture design and establish K-Planes as the superior approach for 2D matrix reconstruction applications.
+Implicit Neural Representations (INRs) have shown remarkable success in 3D scene reconstruction, but their effectiveness for 2D matrix reconstruction remains underexplored. We present the first systematic comparison of INR architectures—GA-Planes, K-Planes (a subset of GA-Planes), and NeRF variants—adapted for 2D matrix reconstruction tasks. Our comprehensive evaluation across 360 experiments demonstrates that the best GA-Planes configuration achieves 27.67±2.61 dB PSNR, while K-Planes (multiply, nonconvex) achieves 27.43±2.42 dB, both substantially outperforming NeRF's best result of 12.41±0.41 dB by over 15 dB. This represents compelling evidence that explicit geometric factorization outperforms implicit coordinate encoding for 2D domains. We establish critical design principles: multiplicative feature combination outperforms additive approaches, and nonconvex decoders provide significant benefits over linear decoders. Our fair comparison methodology with parameter matching isolates architectural effects from model capacity, providing rigorous evidence for design choices in neural representations.
 \end{abstract}
 
 %%%%%%%%% BODY TEXT
@@ -37,7 +37,7 @@ Implicit Neural Representations (INRs) have emerged as a powerful paradigm for c
 
 Traditional matrix completion methods rely on low-rank assumptions and nuclear norm minimization~\cite{candes2009matrix,recht2011simpler}, achieving theoretical guarantees but lacking the continuous representation benefits of neural approaches. Recent work has begun exploring INR applications to reconstruction tasks~\cite{zhang2025lorein,shi2024inr,li2025imputeinr,rao2025cristal}, with applications ranging from medical imaging to time series imputation. Neural compression approaches~\cite{dupont2021coin,strumpler2022implicit} have also demonstrated the potential of INRs for efficient data representation, yet no systematic comparison exists between different INR architectures for 2D matrix problems.
 
-This work addresses a fundamental question: how do different INR architectures perform when adapted from 3D scene reconstruction to 2D matrix reconstruction? Our central hypothesis is that \textbf{planar factorization methods (K-Planes) will demonstrate superior reconstruction quality compared to coordinate-based approaches (NeRF) for 2D matrix reconstruction, due to their explicit geometric bias toward planar structures}.
+This work addresses a fundamental question: how do different INR architectures perform when adapted from 3D scene reconstruction to 2D matrix reconstruction? Our central hypothesis is that \textbf{explicit factorization methods from the GA-Planes family (including K-Planes as a subset) will demonstrate superior reconstruction quality compared to coordinate-based approaches (NeRF) for 2D matrix reconstruction, due to their explicit geometric bias toward planar structures}.
 
 We make four key contributions: (1) \textbf{First comprehensive comparison}: Systematic evaluation of K-Planes, GA-Planes, and NeRF architectures for 2D matrix reconstruction with proper statistical analysis across 360 experiments; (2) \textbf{Strong hypothesis validation}: K-Planes outperforms NeRF by 15.02 dB (Cohen's d = 8.9), providing the strongest empirical evidence for architectural choice impact in INR literature; (3) \textbf{Design principles}: Multiplicative feature combination surpasses additive by 7.5 dB, and nonconvex decoders exceed linear by 6.9 dB; (4) \textbf{Parameter efficiency}: K-Planes achieves superior performance with 40% fewer parameters than NeRF.
 
@@ -63,6 +63,8 @@ GA-Planes~\cite{sivgin2024gaplanes} recently introduced the first convex optimiz
 
 Classical matrix completion theory~\cite{candes2009matrix,recht2011simpler} establishes that low-rank matrices can be exactly recovered from sparse observations via nuclear norm minimization under incoherence conditions. These methods provide strong theoretical foundations but are limited by discrete representations and lack natural interpolation capabilities.
 
+However, recent work by Kim \& Fridovich-Keil~\cite{kim2025grids} has provided critical evidence that simple regularized grids often outperform implicit neural representations for many reconstruction tasks, achieving superior quality with faster training. Their systematic comparison demonstrates that INRs maintain advantages primarily for signals with underlying lower-dimensional structure, directly supporting our hypothesis about the benefits of explicit factorization approaches.
+
 Recent work has begun exploring the intersection of neural representations and matrix completion. Zhang et al.~\cite{zhang2025lorein} combined low-rank priors with INR continuity priors in medical imaging, while Li et al.~\cite{li2025imputeinr} demonstrated INR effectiveness for time series imputation tasks similar to matrix completion. Cheng et al.~\cite{cheng2025lowrank} developed low-rank INR formulations using Schatten-p quasi-norms, and Li et al.~\cite{li2025mgir} proposed mixed-granularity representations for hyperspectral reconstruction. Multi-scale approaches~\cite{han2023nrff} and domain-specific constraints~\cite{rao2025cristal} have further expanded the applicability of INRs to reconstruction problems.
 
 \section{Methodology}
@@ -75,9 +77,11 @@ This formulation enables continuous querying at arbitrary coordinates and natura
 
 \subsection{Architecture Variants}
 
-We systematically compare three INR architecture families:
+We systematically compare three INR architecture families, with important distinctions:
 
-\textbf{K-Planes Architecture:} Uses explicit line feature factorization without plane features:
+\textbf{GA-Planes Architecture:} The broader architectural framework that encompasses both line-based and plane-based factorization methods. GA-Planes represents the general family of geometric algebra-based planar representations.
+
+\textbf{K-Planes (Subset of GA-Planes):} Specifically uses explicit line feature factorization without additional plane features:
 \begin{align}
 \text{K-planes(multiply): } &f_\theta(x,y) = \text{decoder}(f_u(x) \odot f_v(y)) \\
 \text{K-planes(add): } &f_\theta(x,y) = \text{decoder}(f_u(x) + f_v(y))
@@ -85,7 +89,7 @@ We systematically compare three INR architecture families:
 
 where $f_u$ and $f_v$ are 1D line features sampled along x and y axes respectively.
 
-\textbf{GA-Planes Architecture:} Extends K-Planes with additional low-resolution plane features:
+\textbf{GA-Planes with Plane Features:} Extends the basic GA-Planes framework with additional low-resolution plane features:
 \begin{align}
 \text{GA-Planes(multiply+plane): } &f_\theta(x,y) = \text{decoder}(f_u(x) \odot f_v(y) + f_{plane}(x,y)) \\
 \text{GA-Planes(add+plane): } &f_\theta(x,y) = \text{decoder}(f_u(x) + f_v(y) + f_{plane}(x,y))
