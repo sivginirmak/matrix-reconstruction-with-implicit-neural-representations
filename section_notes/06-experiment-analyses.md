@@ -84,7 +84,7 @@
 
 ## Architecture Analysis - Statistical Verification
 
-### Feature Combination Methods (Fair Comparison Verified)
+### Feature Combination Methods
 
 **Parameter-Matched Analysis** (Same architectures, different combinations):
 
