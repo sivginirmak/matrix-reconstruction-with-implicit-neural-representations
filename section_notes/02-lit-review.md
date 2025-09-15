@@ -1,4 +1,4 @@
-Remove all pre-print references in this section ., ONLY include papers&#x20;
+Remove all pre-print references in this section .md and, ONLY include papers&#x20;
 
 # Literature Review
 
