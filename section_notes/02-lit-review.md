@@ -1,6 +1,6 @@
 Remove all pre-print references in this section .md and also in the paper.jsonl, ONLY include papers from reputable conferences.
 
-and include this paper at the forefront, it is the nearest neighbo- [https://arxiv.org/abs/2506.11139](https://arxiv.org/abs/2506.11139)
+and include this paper at the forefront, it is the nearest neighbor paper to - [https://arxiv.org/abs/2506.11139](https://arxiv.org/abs/2506.11139)
 
 # Literature Review
 
