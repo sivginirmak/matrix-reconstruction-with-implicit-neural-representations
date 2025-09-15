@@ -1,6 +1,4 @@
-Remove all pre-print references in this section .md and also in the paper.jsonl, ONLY include papers from reputable conferences.
-
-and include this paper at the f- [https://arxiv.org/abs/2506.11139](https://arxiv.org/abs/2506.11139)
+Remove all pre-print references in this section .md and also in the paper.jsonl, ONLY include papers from reputable&#x20;
 
 # Literature Review
 
