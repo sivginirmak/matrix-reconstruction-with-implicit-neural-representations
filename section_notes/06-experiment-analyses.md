@@ -25,7 +25,7 @@
 
 **Primary Hypothesis:** K-Planes architectures will demonstrate >5dB PSNR improvement over NeRF for 2D matrix reconstruction due to explicit geometric bias toward planar structures.
 
-**Result:** **STRONGLY VALIDATED** (Enhanced with Fair Parameter Comparison)
+**Result:** **STRONGLY VALIDATED**
 
 **Evidence (Fair Comparison - Matched Parameters):**
 
