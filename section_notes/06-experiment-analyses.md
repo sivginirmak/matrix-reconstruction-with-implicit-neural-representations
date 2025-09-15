@@ -1,18 +1,6 @@
 <REVISIONS>
 To make fair analysis with respect to the various parameters, please update this so that
-Please update analysis with this chart:&#x20;
-
-\- \*\*size vs PSNR\*\*
-
-&#x9;\- y axis being PSNR, x axis being compression ratio&#x20;
-
-&#x9;	\- compare the pareto optimal points for each model
-
-&#x9;	\- whichever curve is the best is the best architecture
-
-&#x9;	\- \*\*problem is they all start at diff param counts. so there will be lots of gaps btwn sizes\*\*
-
-
+  
 
 </REVISIONS>
 
