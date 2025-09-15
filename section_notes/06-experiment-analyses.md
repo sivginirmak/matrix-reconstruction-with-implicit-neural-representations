@@ -1,7 +1,5 @@
-
-
 <REVISIONS>
-
+To make fair analysis with respect to the various parameters, please update this so that
 Please update analysis with this chart:&#x20;
 
 \- \*\*size vs PSNR\*\*
@@ -165,4 +163,3 @@ This work provides **statistically verified empirical evidence** that architectu
 4. **Multi-Modal Integration**: Combine with text, audio for comprehensive content representation
 
 **Research Priority**: Multi-dataset validation is **immediately critical** to establish whether these results generalize beyond the single astronaut image, determining if this represents a fundamental architectural advance or dataset-specific optimization.
-
