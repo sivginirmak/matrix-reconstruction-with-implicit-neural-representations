@@ -4,7 +4,7 @@ Please update analysis with this chart:&#x20;
 
 \- \*\*size vs PSNR\*\*
 
-&#x9;\- y axis being PSNR, x axis being compression ratio or size
+&#x9;\- y axis being PSNR, x axis being compression ratio&#x20;
 
 &#x9;	\- compare the pareto optimal points for each model
 
@@ -13,6 +13,8 @@ Please update analysis with this chart:&#x20;
 &#x9;	\- \*\*problem is they all start at diff param counts. so there will be lots of gaps btwn sizes\*\*
 
 
+
+</REVISIONS>
 
 
 
