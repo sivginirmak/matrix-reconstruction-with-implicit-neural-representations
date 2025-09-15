@@ -19,7 +19,7 @@
 
 ***
 
-# Original Analysis Enhanced with Fair Comparison
+# Analysis
 
 ## Hypothesis Validation - Statistically Verified
 
