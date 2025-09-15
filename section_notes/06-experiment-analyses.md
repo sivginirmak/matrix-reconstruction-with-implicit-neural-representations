@@ -1,4 +1,4 @@
-<REVISIONS>
+REVISI
 
 Please update analysis with this chart:&#x20;
 
@@ -13,8 +13,6 @@ Please update analysis with this chart:&#x20;
 &#x9;	\- \*\*problem is they all start at diff param counts. so there will be lots of gaps btwn sizes\*\*
 
 
-
-<REVISIONS>
 
 
 
