@@ -1,4 +1,4 @@
-Remove all pre-print references, ONLY include&#x20;
+Remove all pre-print references, ONLY include papers
 
 # Literature Review
 
