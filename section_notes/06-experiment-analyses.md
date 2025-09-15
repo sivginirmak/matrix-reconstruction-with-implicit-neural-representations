@@ -157,7 +157,7 @@
 8. **Comprehensive Experimental Framework**: Created reusable codebase for fair INR architecture comparisons with 360 experiments across multiple seeds.
 9. **Statistical Verification Protocol**: **Methodological contribution** - established framework for verifying research claims against raw experimental data.
 
-## Scientific Impact - Enhanced Assessment
+## Scientific Impact
 
 This work provides **statistically verified empirical evidence** that architectural design choices in INRs have profound impacts on reconstruction quality. The **15.02 dB improvement** of K-Planes over NeRF (3x the hypothesized magnitude) challenges the field to reconsider the role of explicit geometric priors versus universal approximation in neural representations.
 
