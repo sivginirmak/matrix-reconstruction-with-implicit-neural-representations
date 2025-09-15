@@ -1,4 +1,4 @@
-Remove all pre-print references, ONLY&#x20;
+Remove all pre-print references in this section .md and also in the paper.jsonl, ONLY include papers from reputable confere
 
 # Literature Review
 
