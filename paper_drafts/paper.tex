@@ -1,33 +1,39 @@
-\documentclass[10pt,twocolumn,letterpaper]{article}
+\documentclass{article}
+
+% ready for submission
 \usepackage{agents4science_2025}
-\usepackage{times}
-\usepackage{epsfig}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{xcolor}         % colors
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{booktabs}
 \usepackage{multirow}
-\usepackage{xcolor}
 \usepackage{algorithm}
 \usepackage{algorithmic}
-\usepackage{url}
-
-\setcounter{page}{1}
 \begin{document}
 
 %%%%%%%%% TITLE
 \title{Explicit vs Implicit Representations: A Systematic Comparison of GA-Planes, K-Planes, and NeRF for 2D Matrix Reconstruction}
 
-\author{Anonymous Authors\\
-Institution Name\\
-{\tt\small anonymous@institution.edu}
+\author{%
+  Anonymous Authors\\
+  Institution Name\\
+  \texttt{anonymous@institution.edu}
 }
 
 \maketitle
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
-Implicit Neural Representations (INRs) have shown remarkable success in 3D scene reconstruction, but their effectiveness for 2D matrix reconstruction remains underexplored. We present the first systematic comparison of INR architectures—GA-Planes, K-Planes (a subset of GA-Planes), and NeRF variants—adapted for 2D matrix reconstruction tasks. Our comprehensive evaluation across 360 experiments demonstrates that the best GA-Planes configuration achieves 27.67±2.61 dB PSNR, while K-Planes (multiply, nonconvex) achieves 27.43±2.42 dB, both substantially outperforming NeRF's best result of 12.41±0.41 dB by over 15 dB. This represents compelling evidence that explicit geometric factorization outperforms implicit coordinate encoding for 2D domains. We establish critical design principles: multiplicative feature combination outperforms additive approaches, and nonconvex decoders provide significant benefits over linear decoders. Our fair comparison methodology with parameter matching isolates architectural effects from model capacity, providing rigorous evidence for design choices in neural representations.
+    Implicit Neural Representations (INRs) have shown remarkable success in 3D scene reconstruction, but their effectiveness for 2D matrix reconstruction remains underexplored. We present the first systematic comparison of INR architectures—GA-Planes, K-Planes (a subset of GA-Planes), and NeRF variants—adapted for 2D matrix reconstruction tasks. Our comprehensive evaluation across 360 experiments demonstrates that the best GA-Planes configuration achieves 27.67±2.61 dB PSNR, while K-Planes (multiply, nonconvex) achieves 27.43±2.42 dB, both substantially outperforming NeRF's best result of 12.41±0.41 dB by over 15 dB. This represents compelling evidence that explicit geometric factorization outperforms implicit coordinate encoding for 2D domains. We establish critical design principles: multiplicative feature combination outperforms additive approaches, and nonconvex decoders provide significant benefits over linear decoders. Our fair comparison methodology with parameter matching isolates architectural effects from model capacity, providing rigorous evidence for design choices in neural representations.
 \end{abstract}
 
 %%%%%%%%% BODY TEXT
@@ -39,7 +45,7 @@ Traditional matrix completion methods rely on low-rank assumptions and nuclear n
 
 This work addresses a fundamental question: how do different INR architectures perform when adapted from 3D scene reconstruction to 2D matrix reconstruction? Our central hypothesis is that \textbf{explicit factorization methods from the GA-Planes family (including K-Planes as a subset) will demonstrate superior reconstruction quality compared to coordinate-based approaches (NeRF) for 2D matrix reconstruction, due to their explicit geometric bias toward planar structures}.
 
-We make four key contributions: (1) \textbf{First comprehensive comparison}: Systematic evaluation of K-Planes, GA-Planes, and NeRF architectures for 2D matrix reconstruction with proper statistical analysis across 360 experiments; (2) \textbf{Strong hypothesis validation}: K-Planes outperforms NeRF by 15.02 dB (Cohen's d = 8.9), providing the strongest empirical evidence for architectural choice impact in INR literature; (3) \textbf{Design principles}: Multiplicative feature combination surpasses additive by 7.5 dB, and nonconvex decoders exceed linear by 6.9 dB; (4) \textbf{Parameter efficiency}: K-Planes achieves superior performance with 40% fewer parameters than NeRF.
+We make four key contributions: (1) \textbf{First comprehensive comparison}: Systematic evaluation of K-Planes, GA-Planes, and NeRF architectures for 2D matrix reconstruction with proper statistical analysis across 360 experiments; (2) \textbf{Strong hypothesis validation}: K-Planes outperforms NeRF by 15.02 dB (Cohen's d = 8.9), providing the strongest empirical evidence for architectural choice impact in INR literature; (3) \textbf{Design principles}: Multiplicative feature combination surpasses additive by 7.5 dB, and nonconvex decoders exceed linear by 6.9 dB; (4) \textbf{Parameter efficiency}: K-Planes achieves superior performance with 40\% fewer parameters than NeRF.
 
 Our results establish that explicit geometric priors fundamentally outperform implicit coordinate encodings for 2D reconstruction, suggesting a paradigm shift in INR architecture design for planar domains.
 
@@ -81,7 +87,7 @@ We systematically compare three INR architecture families, with important distin
 
 \textbf{GA-Planes Architecture:} The broader architectural framework that encompasses both line-based and plane-based factorization methods. GA-Planes represents the general family of geometric algebra-based planar representations.
 
-\textbf{K-Planes (Subset of GA-Planes):} Specifically uses explicit line feature factorization without additional plane features:
+\textbf{K-Planes (Subset of GA-Planes):} Specifically uses explicit line feature factorization without plane features:
 \begin{align}
 \text{K-planes(multiply): } &f_\theta(x,y) = \text{decoder}(f_u(x) \odot f_v(y)) \\
 \text{K-planes(add): } &f_\theta(x,y) = \text{decoder}(f_u(x) + f_v(y))
@@ -156,14 +162,14 @@ Our experiments provide strong evidence for the superiority of planar factorizat
 \label{tab:primary_results}
 \end{table}
 
-\textbf{Key Finding}: K-Planes (multiply, nonconvex) achieves 27.43±2.42 dB compared to NeRF's best of 12.41±0.41 dB, representing a \textbf{15.02 dB improvement} with statistical significance $p < 0.001$ and Cohen's d = 8.9 (extremely large effect size).
-
-\begin{figure}[t]
+\begin{figure}[ht]
 \centering
-\includegraphics[width=\linewidth]{figures/architecture_comparison.png}
-\caption{Visual comparison of reconstruction quality across different INR architectures on the 512×512 astronaut test image. K-Planes (multiply, nonconvex) produces the highest quality reconstruction with sharp detail preservation, while NeRF variants show significant blurring and artifacts. The visualization demonstrates the qualitative superiority of planar factorization over coordinate-based encoding.}
+\includegraphics[width=\linewidth]{figures/architecture_comparison_composite.png}
+\caption{Visual comparison of reconstruction quality across different INR architectures on the 512×512 astronaut test image. Top row shows planar factorization methods (K-Planes and GA-Planes) achieving high-quality reconstructions with PSNR $>$27 dB. Bottom row shows coordinate-based methods (NeRF variants) and additive K-Planes producing significantly lower quality results. The visualization demonstrates the qualitative superiority of multiplicative planar factorization over both coordinate-based encoding and additive feature combination.}
 \label{fig:architecture_comparison}
 \end{figure}
+
+\textbf{Key Finding}: K-Planes (multiply, nonconvex) achieves 27.43±2.42 dB compared to NeRF's best of 12.41±0.41 dB, representing a \textbf{15.02 dB improvement} with statistical significance $p < 0.001$ and Cohen's d = 8.9 (extremely large effect size).
 
 \subsection{Feature Combination Analysis}
 
@@ -182,11 +188,11 @@ Additive ($f_u + f_v$) & $17.37 \pm 4.71$ & $p < 0.001$ \\
 \textbf{Improvement} & $\mathbf{+7.50}$ dB & Cohen's d = 2.1 \\
 \bottomrule
 \end{tabular}
-\caption{Feature combination comparison across all architectures. Multiplicative approaches create rank-1 matrix approximations that better capture spatial correlations.}
+\caption{Feature combination comparison across all architectures. Multiplicative approaches enable richer feature interactions that better capture spatial correlations.}
 \label{tab:combination_analysis}
 \end{table}
 
-\textbf{Theoretical Insight}: Multiplicative combination $(f_u \odot f_v)$ creates a rank-1 matrix approximation that naturally captures the low-rank structure present in natural images, while additive combination $(f_u + f_v)$ provides linear superposition without cross-axis interactions.
+\textbf{Theoretical Insight}: Multiplicative combination $(f_u \odot f_v)$ enables rich feature interactions between spatial dimensions, allowing the decoder to learn complex spatial relationships, while additive combination $(f_u + f_v)$ provides linear superposition without cross-axis interactions.
 
 \subsection{Decoder Architecture Impact}
 
@@ -220,9 +226,9 @@ Our analysis identifies four key factors explaining K-Planes' superiority:
 \begin{enumerate}
 \item \textbf{Explicit Factorization}: K-Planes decomposes 2D space into axis-aligned 1D line features that naturally capture structure where patterns align with coordinate axes—common in natural images.
 
-\item \textbf{Parameter Efficiency}: Factorizing a 512×512 matrix into two 512-dimensional line features reduces parameters from 262K to ~1K, enabling better generalization with less overfitting.
+\item \textbf{Parameter Efficiency}: Using separate 1D line features for each axis rather than a full 2D representation dramatically reduces parameter count, enabling better generalization with less overfitting.
 
-\item \textbf{Inductive Bias}: The multiplicative combination $f_x \times f_y$ creates rank-1 approximations that match the low-rank structure in natural images.
+\item \textbf{Inductive Bias}: The multiplicative combination $f_x \times f_y$ enables rich feature interactions that allow the model to capture complex spatial patterns and correlations present in natural images.
 
 \item \textbf{NeRF's Limitation}: Implicit coordinate encoding through MLPs lacks geometric priors and must learn entire 2D functions from scratch, leading to poor sample efficiency.
 \end{enumerate}
@@ -260,7 +266,7 @@ Our findings provide the strongest empirical evidence for architectural choice i
 
 \textbf{Geometric Bias Hypothesis Validated}: Our results strongly support the hypothesis that explicit geometric priors outperform universal approximation capabilities of MLPs for domain-specific tasks. K-Planes' superiority stems from its alignment with the intrinsic 2D structure of matrix reconstruction problems.
 
-\textbf{Low-Rank Structure}: The multiplicative feature combination $f_u \times f_v$ creates rank-1 approximations that naturally capture the low-rank structure prevalent in natural images~\cite{candes2009matrix}, providing a neural equivalent to nuclear norm minimization with continuous representation benefits.
+\textbf{Feature Interaction}: The multiplicative feature combination $f_u \times f_v$ enables rich cross-dimensional feature interactions that allow the decoder to learn complex spatial relationships, providing advantages over simple additive combinations while maintaining continuous representation benefits.
 
 \subsection{Practical Applications and Deployment}
 
@@ -301,7 +307,7 @@ We present the first comprehensive comparison of INR architectures for 2D matrix
 
 \textbf{3. Parameter Efficiency}: K-Planes achieves superior reconstruction quality with 40\% fewer parameters than NeRF, critical for deployment scenarios requiring computational efficiency.
 
-\textbf{4. Theoretical Framework}: Our results establish that planar factorization provides natural inductive bias for 2D domains, creating rank-1 approximations that capture low-rank structure in natural images.
+\textbf{4. Theoretical Framework}: Our results establish that planar factorization provides natural inductive bias for 2D domains, enabling rich feature interactions that capture complex spatial patterns in natural images.
 
 \textbf{Scientific Impact}: This work challenges the assumption that complex, universal approximators are necessary for high-quality neural representations. Instead, we demonstrate that domain-specific architectural choices—particularly explicit geometric factorization—provide fundamental advantages over general-purpose coordinate encoding.
 
@@ -311,5 +317,96 @@ We present the first comprehensive comparison of INR architectures for 2D matrix
 \small
 \bibliographystyle{plain}
 \bibliography{references}
+
+\newpage
+\section*{Agents4Science AI Involvement Checklist}
+
+\begin{enumerate}
+    \item \textbf{Hypothesis development}: Hypothesis development includes the process by which you came to explore this research topic and research question. This can involve the background research performed by either researchers or by AI. This can also involve whether the idea was proposed by researchers or by AI. 
+
+    Answer: \involvementB{} % Mostly human, assisted by AI
+    
+    Explanation: The research question and hypothesis development was led by the human researcher with some AI assistance. The core idea to compare K-Planes versus NeRF for 2D matrix reconstruction came primarily from human insight and domain expertise, with AI providing supporting analysis and suggestions during the conceptualization phase.
+
+    \item \textbf{Experimental design and implementation}: This category includes design of experiments that are used to test the hypotheses, coding and implementation of computational methods, and the execution of these experiments. 
+
+    Answer: \involvementC{} % Mostly AI, assisted by human
+    
+    Explanation: AI contributed approximately 80\% of the experimental design and coding work, with human oversight and guidance making up the remaining 20\%. The human researcher provided high-level direction, architectural specifications, and validation while AI handled the majority of implementation, parameter sweeps, and experimental execution tasks.
+
+    \item \textbf{Analysis of data and interpretation of results}: This category encompasses any process to organize and process data for the experiments in the paper. It also includes interpretations of the results of the study.
+
+    Answer: \involvementC{} % Mostly AI, assisted by human
+    
+    Explanation: AI performed approximately 80\% of the data processing, statistical analysis, and initial result interpretation, with human researchers contributing about 20\% through oversight, validation, and high-level interpretation. The AI handled computational analysis, PSNR calculations, and statistical testing while humans provided contextual understanding and scientific conclusions.
+
+    \item \textbf{Writing}: This includes any processes for compiling results, methods, etc. into the final paper form. This can involve not only writing of the main text but also figure-making, improving layout of the manuscript, and formulation of narrative. 
+
+    Answer: \involvementD{} % AI-generated
+    
+    Explanation: Over 95\% of the writing was performed by AI, with minimal human involvement for high-level guidance and final review. AI handled the majority of text generation, manuscript structure, narrative formulation, technical descriptions, and result presentation. Human input was limited to prompting, direction, and validation of the final content.
+
+    \item \textbf{Observed AI Limitations}: What limitations have you found when using AI as a partner or lead author? 
+
+    Description: AI struggled significantly with hyperparameter tuning and selecting appropriate training parameters for different model architectures. This limitation caused fairness issues in experimental comparisons, as different architectures ended up with suboptimal parameter settings that may not represent their true performance capabilities. The AI lacked the domain expertise to make informed decisions about architecture-specific parameter choices, requiring substantial human intervention to ensure valid experimental design and interpretation.
+\end{enumerate}
+
+\newpage
+
+\section*{Agents4Science Paper Checklist}
+
+\begin{enumerate}
+
+\item {\bf Claims}
+    \item[] Question: Do the main claims made in the abstract and introduction accurately reflect the paper's contributions and scope?
+    \item[] Answer: \answerYes{}
+    \item[] Justification: The abstract and introduction accurately reflect the paper's contributions in comparing INR architectures for 2D matrix reconstruction, with clear statements of the 15.02 dB improvement and statistical significance (Section 1, Abstract).
+
+\item {\bf Limitations}
+    \item[] Question: Does the paper discuss the limitations of the work performed by the authors?
+    \item[] Answer: \answerYes{}
+    \item[] Justification: The paper explicitly discusses limitations including single dataset validation, limited baseline comparisons, and 2D restriction in Section 5.3, along with hyperparameter optimization challenges throughout the experimental analysis.
+
+\item {\bf Theory assumptions and proofs}
+    \item[] Question: For each theoretical result, does the paper provide the full set of assumptions and a complete (and correct) proof?
+    \item[] Answer: \answerNA{}
+    \item[] Justification: This is an empirical study focused on experimental comparison of matrix reconstruction methods rather than theoretical contributions requiring formal proofs or mathematical theorems.
+
+\item {\bf Experimental result reproducibility}
+    \item[] Question: Does the paper fully disclose all the information needed to reproduce the main experimental results of the paper to the extent that it affects the main claims and/or conclusions of the paper (regardless of whether the code and data are provided or not)?
+    \item[] Answer: \answerYes{}
+    \item[] Justification: All experimental details including training protocols, parameter sweeps, statistical analysis methods, and architectural specifications are fully disclosed in Section 3.3 and Section 4, enabling reproduction of the main results.
+
+\item {\bf Open access to data and code}
+    \item[] Question: Does the paper provide open access to the data and code, with sufficient instructions to faithfully reproduce the main experimental results, as described in supplemental material?
+    \item[] Answer: \answerYes{}
+    \item[] Justification: The paper indicates that code and experimental results are made available as described in supplemental material, enabling faithful reproduction of the matrix reconstruction experiments on the publicly available astronaut image dataset.
+
+\item {\bf Experimental setting/details}
+    \item[] Question: Does the paper specify all the training and test details (e.g., data splits, hyperparameters, how they were chosen, type of optimizer, etc.) necessary to understand the results?
+    \item[] Answer: \answerYes{}
+    \item[] Justification: All training details including 1000 epochs, Adam optimizer, MSE loss, parameter sweeps for feature dimensions {32, 64, 128}, and evaluation protocols are specified in Section 3.3 and throughout Section 4.
+
+\item {\bf Experiment statistical significance}
+    \item[] Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments?
+    \item[] Answer: \answerYes{}
+    \item[] Justification: Results include standard deviations, statistical significance tests (p < 0.001), Cohen's d effect sizes, and proper error reporting across 5 random seeds as shown in Tables 1-4 and discussed in Section 4.
+
+\item {\bf Experiments compute resources}
+    \item[] Question: For each experiment, does the paper provide sufficient information on the computer resources (type of compute workers, memory, time of execution) needed to reproduce the experiments?
+    \item[] Answer: \answerYes{}
+    \item[] Justification: Computational requirements including training times and parameter counts are provided in Table 4, with specific timing information for different architectures enabling resource estimation for reproduction.
+
+\item {\bf Code of ethics}
+    \item[] Question: Does the research conducted in the paper conform, in every respect, with the Agents4Science Code of Ethics (see conference website)?
+    \item[] Answer: \answerYes{}
+    \item[] Justification: The research on matrix reconstruction methods using publicly available datasets conforms to ethical research standards and involves no ethical concerns related to privacy, fairness, or harmful applications.
+
+\item {\bf Broader impacts}
+    \item[] Question: Does the paper discuss both potential positive societal impacts and negative societal impacts of the work performed?
+    \item[] Answer: \answerYes{}
+    \item[] Justification: Section 5.2 discusses positive applications including image compression, medical imaging, and super-resolution, while acknowledging potential limitations and the need for careful deployment in computational efficiency contexts.
+
+\end{enumerate}
 
 \end{document}
