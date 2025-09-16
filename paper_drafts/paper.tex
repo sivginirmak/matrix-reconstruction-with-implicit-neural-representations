@@ -158,7 +158,7 @@ Our experiments provide strong evidence for the superiority of planar factorizat
  & Nonconvex & $11.58 \pm 1.31$ & 26.9K \\
 \bottomrule
 \end{tabular}
-\caption{Comprehensive architecture comparison. K-Planes achieves the best performance-to-parameter ratio, outperforming NeRF by over 15 dB while using 40\% fewer parameters.}
+\caption{Comprehensive architecture comparison. K-Planes outperforms NeRF by over 15 dB while using 40\% fewer parameters.}
 \label{tab:primary_results}
 \end{table}
 
@@ -240,17 +240,17 @@ K-Planes demonstrates superior parameter efficiency:
 \begin{table}[t]
 \centering
 \small
-\begin{tabular}{@{}lccc@{}}
+\begin{tabular}{@{}lcc@{}}
 \toprule
-\textbf{Method} & \textbf{Parameters} & \textbf{Training Time (s)} & \textbf{PSNR/Param Ratio} \\
+\textbf{Method} & \textbf{Parameters} & \textbf{Training Time (s)} \\
 \midrule
-K-Planes (multiply, nonconvex) & 16.1K & 269.3 ± 138.8 & 0.0025 \\
-GA-Planes (multiply+plane, nonconvex) & 49.5K & 433.7 ± 247.9 & 0.0013 \\
-NeRF (SIREN) & 22.0K & 102.9 ± 57.2 & 0.0016 \\
-NeRF (nonconvex) & 26.9K & 101.6 ± 47.7 & 0.0009 \\
+K-Planes (multiply, nonconvex) & 16.1K & 269.3 ± 138.8 \\
+GA-Planes (multiply+plane, nonconvex) & 49.5K & 433.7 ± 247.9 \\
+NeRF (SIREN) & 22.0K & 102.9 ± 57.2 \\
+NeRF (nonconvex) & 26.9K & 101.6 ± 47.7 \\
 \bottomrule
 \end{tabular}
-\caption{Computational efficiency comparison. K-Planes achieves the best performance-to-parameter ratio despite longer training times.}
+\caption{Computational efficiency comparison showing parameter counts and training times across architectures.}
 \label{tab:efficiency}
 \end{table}
 
