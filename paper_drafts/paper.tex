@@ -207,13 +207,11 @@ Decoder complexity fundamentally affects reconstruction capability:
 \midrule
 Nonconvex (2-layer MLP) & $24.71 \pm 3.74$ & Baseline \\
 Linear (single layer) & $17.83 \pm 5.01$ & $p < 0.001$ \\
-SIREN (sinusoidal) & $12.41 \pm 0.41$ & $p < 0.001$ \\
 \midrule
 \textbf{Nonconvex vs Linear} & $\mathbf{+6.88}$ dB & Cohen's d = 1.6 \\
-\textbf{Nonconvex vs SIREN} & $\mathbf{+12.30}$ dB & Cohen's d = 4.1 \\
 \bottomrule
 \end{tabular}
-\caption{Decoder architecture comparison across all models. Nonconvex decoders enable complex feature transformations essential for high-quality reconstruction.}
+\caption{Decoder architecture comparison across K-Planes and GA-Planes models. Nonconvex decoders enable complex feature transformations essential for high-quality reconstruction.}
 \label{tab:decoder_comparison}
 \end{table}
 
@@ -262,11 +260,9 @@ Our findings provide the strongest empirical evidence for architectural choice i
 
 \textbf{Relationship to Prior Work}: Our results complement recent advances in INR efficiency. While TensoRF~\cite{chen2022tensorf} achieved 10-100× speedups through tensor factorization in 3D, we demonstrate that planar factorization principles provide even greater advantages in 2D domains. This extends the theoretical framework of Zhang et al.~\cite{zhang2025lorein}, who combined low-rank priors with neural representations, by showing that explicit factorization outperforms implicit learning.
 
-\subsection{Theoretical Implications}
+\subsection{Matrix Factorization Perspective}
 
-\textbf{Geometric Bias Hypothesis Validated}: Our results strongly support the hypothesis that explicit geometric priors outperform universal approximation capabilities of MLPs for domain-specific tasks. K-Planes' superiority stems from its alignment with the intrinsic 2D structure of matrix reconstruction problems.
-
-\textbf{Feature Interaction}: The multiplicative feature combination $f_u \times f_v$ enables rich cross-dimensional feature interactions that allow the decoder to learn complex spatial relationships, providing advantages over simple additive combinations while maintaining continuous representation benefits.
+\textbf{Theoretical Insight from Kim \& Fridovich-Keil}: Recent analysis by Kim \& Fridovich-Keil~\cite{kim2025grids} provides theoretical insight into why multiplicative combinations outperform additive approaches. When using a linear decoder, multiplicative feature combination $f_u(x) \odot f_v(y)$ followed by linear transformation is mathematically equivalent to Singular Value Decomposition (SVD), enabling full-rank matrix approximation. In contrast, additive combination $f_u(x) + f_v(y)$ with linear decoding constrains the representation to rank-2 matrices, severely limiting expressiveness. However, both approaches can achieve full rank when paired with nonconvex (MLP) decoders, explaining why our nonconvex decoder results show substantial improvements over linear decoders across all architectures.
 
 \subsection{Practical Applications and Deployment}
 
