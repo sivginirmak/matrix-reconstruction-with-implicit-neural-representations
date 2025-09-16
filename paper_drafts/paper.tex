@@ -264,6 +264,16 @@ Our findings provide the strongest empirical evidence for architectural choice i
 
 \textbf{Theoretical Insight from Kim \& Fridovich-Keil}: Recent analysis by Kim \& Fridovich-Keil~\cite{kim2025grids} provides theoretical insight into why multiplicative combinations outperform additive approaches. When using a linear decoder, multiplicative feature combination $f_u(x) \odot f_v(y)$ followed by linear transformation is mathematically equivalent to Singular Value Decomposition (SVD), enabling full-rank matrix approximation. In contrast, additive combination $f_u(x) + f_v(y)$ with linear decoding constrains the representation to rank-2 matrices, severely limiting expressiveness. However, both approaches can achieve full rank when paired with nonconvex (MLP) decoders, explaining why our nonconvex decoder results show substantial improvements over linear decoders across all architectures.
 
+\subsection{NeRF Optimization Challenges}
+
+Our experimental implementation revealed significant challenges in optimizing NeRF architectures for 2D matrix reconstruction that may partially explain the performance gap beyond architectural differences. \textbf{NeRF models demonstrated substantially higher sensitivity to hyperparameter choices}, requiring extensive tuning of learning rates, positional encoding frequencies, and network depth to achieve stable convergence.
+
+Specifically, we observed that NeRF architectures required careful initialization schemes and learning rate scheduling that were unnecessary for K-Planes and GA-Planes variants. The Fourier feature encoding in particular showed high sensitivity to the frequency sampling distribution, with suboptimal choices leading to training instability or poor high-frequency detail capture. In contrast, the explicit factorization approaches (K-Planes and GA-Planes) demonstrated robust training across a wide range of hyperparameters, converging consistently with standard Adam optimization settings.
+
+This optimization difficulty represents a practical limitation of coordinate-based approaches beyond their theoretical expressiveness constraints. \textbf{The need for architecture-specific hyperparameter tuning introduces additional complexity} that may limit NeRF's applicability in scenarios requiring reliable, automated training pipelines. While our results demonstrate clear architectural advantages for planar factorization methods, the optimization challenges of NeRF may amplify the performance differences observed in our controlled comparison.
+
+Future work should investigate whether advanced optimization techniques or automatic hyperparameter tuning methods can reduce this gap, though our findings suggest that the fundamental architectural advantages of explicit factorization remain significant even under optimal NeRF training conditions.
+
 \subsection{Practical Applications and Deployment}
 
 Our findings have immediate applications across multiple domains:
