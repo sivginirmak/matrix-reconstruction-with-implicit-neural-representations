@@ -174,9 +174,192 @@ Our literature review validates several key research directions:
 * **Extends K-Planes:** Applies planar factorization concepts to matrix completion
 * **Incorporates STRAINER insights:** Explores transfer learning for matrix reconstruction tasks
 
-## Literature Summary
+## Expanded Literature Analysis
 
-We have identified **15 high-quality papers** from top-tier conferences (SIGGRAPH, NeurIPS, CVPR, ECCV) that provide the theoretical and empirical foundation for INR-based matrix reconstruction. The literature strongly supports our research direction while highlighting significant gaps in direct 2D matrix applications.
+### Advanced INR Architectures (2021-2025)
 
-**Key Finding:** The convergence of evidence from grid-based methods (Plenoxels), architectural innovations (Instant-NGP), and systematic comparisons (Kim & Fridovich-Keil) suggests that our hybrid approach combining the best of explicit and implicit methods has strong potential for advancing matrix reconstruction capabilities.
+#### Multiscale and Anti-aliasing Methods
+
+**Mip-NeRF Series (Barron et al., ICCV 2021, CVPR 2022)** introduced integrated positional encoding for multiscale representation, eliminating aliasing artifacts through cone tracing instead of point sampling. For matrix reconstruction, this suggests **continuous matrix interpolation methods** that handle different resolution queries smoothly.
+
+#### Efficiency Breakthroughs
+
+**EfficientNeRF (Hu et al., CVPR 2022)** achieved significant speedups through adaptive sampling and early ray termination. These **importance sampling strategies** are directly applicable to matrix reconstruction where full matrix evaluation may be prohibitive.
+
+**FastNeRF (Garbin et al., ICCV 2021)** demonstrated 200 FPS rendering through factorized representations and caching strategies, showing how **separation of concerns** (position vs. view dependence) enables real-time performance.
+
+#### Regularization and Sparse Reconstruction
+
+**RegNeRF (Niemeyer et al., CVPR 2022)** provides the most directly relevant advances for sparse matrix completion:
+- **Depth smoothness regularization** → matrix smoothness constraints
+- **Normal consistency losses** → structural consistency in matrices  
+- **Patch-based regularization** → local matrix structure preservation
+
+**Technical Insight:** RegNeRF's success with sparse views directly translates to sparse matrix completion challenges.
+
+#### Novel Geometric Representations
+
+**PermutoNeRF (Rosu & Behnke, CVPR 2023)** introduced lattice-based representations using permutohedra, providing alternatives to standard grid structures. This suggests **structured coordinate systems** beyond Cartesian grids may benefit matrix reconstruction.
+
+### Explicit vs Implicit: The Definitive Analysis
+
+#### Direct Grid Optimization Advances
+
+**Direct Voxel Grid Optimization (Sun et al., CVPR 2022)** provides crucial evidence:
+- **100x speedup** over NeRF with comparable quality
+- **Simple L2 loss** with spatial regularization sufficient
+- **No neural networks required** for high-quality reconstruction
+
+**Critical Implication:** For matrix reconstruction, direct parameter optimization may outperform neural approaches when explicit structure is appropriate.
+
+#### Kim & Fridovich-Keil (2025): Decision Framework
+
+Their systematic evaluation establishes **clear performance boundaries**:
+
+**Grids Outperform INRs When:**
+- Regular structure (natural images, textures)
+- Speed is crucial
+- Limited training data
+- Interpretability required
+
+**INRs Maintain Advantage When:**
+- Underlying low-dimensional manifold structure
+- Irregular sampling patterns
+- Complex nonlinear relationships
+- Multi-resolution requirements
+
+**Matrix Reconstruction Decision Tree:**
+```
+Matrix Structure Assessment:
+├─ Regular grid structure → Use explicit grids
+├─ Irregular/sparse patterns → Use INRs  
+├─ Mixed characteristics → Use hybrid approaches
+└─ Unknown structure → Start with grids, adapt if needed
+```
+
+### Modern Matrix Completion Theory Integration
+
+#### Advanced Theoretical Foundations
+
+**Koltchinskii et al. (Annals of Statistics 2011)** established optimal rates for noisy matrix completion: O(√((r(m+n)log(mn))/k)), providing **theoretical benchmarks** for neural approaches.
+
+**Jain et al. (STOC 2013)** demonstrated that non-convex alternating minimization achieves global optimality, **parallel to neural optimization landscapes** where overparameterized networks avoid spurious local minima.
+
+#### Nonlinear Matrix Completion Bridge
+
+**Ongie et al. (SIAM J. MDS 2019)** showed how tensor lifting enables nonlinear matrix completion. **INRs perform implicit lifting** through hidden layers, naturally handling nonlinear relationships without manual feature engineering.
+
+**Technical Connection:** INR coordinate encoding ≈ tensor lifting to higher-dimensional space where relationships become more linear.
+
+#### Neural-Tensor Factorization Unification
+
+**Factor Fields (Chen et al., 2023)** provides the theoretical bridge:
+- Unifies CP, VM, and matrix factorizations under single framework
+- Automatic rank selection and regularization
+- **Direct relevance** to choosing appropriate factorization in matrix reconstruction
+
+### Transfer Learning and Generalization
+
+**STRAINER (Vyas et al., NeurIPS 2024)** demonstrated **≈+10dB improvement** through transfer learning across INRs. For matrix reconstruction, this enables:
+- Cross-domain learning (images → recommender systems)
+- Few-shot matrix completion for new domains
+- Shared structural representations
+
+### Hybrid Method Innovations
+
+**MetricGrids (Wang et al., CVPR 2025)** represents the cutting edge of hybrid approaches:
+- Multiple elementary metric grids in different coordinate spaces
+- High-order Taylor expansion terms for nonlinearity
+- Automatic adaptation to data characteristics
+
+**Matrix Applications:** Different coordinate systems for different matrix structures enable optimal representation for each matrix type.
+
+## Research Gaps and Opportunities Analysis
+
+### Identified Gaps (Updated)
+
+#### 1. Systematic 2D Evaluation Gap
+**Current State:** Most INR evaluation focuses on 3D radiance fields
+**Opportunity:** Comprehensive evaluation of INR architectures specifically for 2D matrix reconstruction tasks
+**Impact:** Establish performance baselines and architectural design principles for 2D domains
+
+#### 2. Theoretical Understanding Gap  
+**Current State:** Limited theoretical analysis of when INRs outperform classical matrix completion
+**Opportunity:** Develop theoretical frameworks connecting neural architectures to matrix structure assumptions
+**Impact:** Provide principled method selection criteria
+
+#### 3. Hybrid Method Design Gap
+**Current State:** Ad-hoc combinations of explicit and implicit methods
+**Opportunity:** Principled hybrid approaches with automatic adaptation mechanisms
+**Impact:** Achieve optimal performance across diverse matrix types
+
+#### 4. Transfer Learning Gap
+**Current State:** No systematic study of transfer learning for matrix completion
+**Opportunity:** Develop transferable representations across matrix domains
+**Impact:** Enable few-shot learning and rapid adaptation to new domains
+
+### Common Points Across Extended Literature
+
+#### 1. Architecture-Performance Relationships
+- **Factorization Benefits:** Consistent across TensoRF, K-Planes, FastNeRF, Factor Fields
+- **Regularization Necessity:** Critical in RegNeRF, nuclear norm methods, tensor completion
+- **Multiscale Importance:** Demonstrated in Mip-NeRF, hierarchical methods
+
+#### 2. Optimization Landscape Insights
+- **Non-convex Tractability:** Both neural networks and matrix factorization avoid spurious local minima under appropriate conditions
+- **Initialization Criticality:** Consistent across alternating minimization, neural training
+- **Adaptive Methods Superiority:** AdamW for neural, adaptive regularization for matrix completion
+
+#### 3. Efficiency Patterns
+- **Factorization Reduces Complexity:** Exponential reduction in parameters across all methods
+- **Sparse Structure Exploitation:** Critical for scalability in both classical and neural approaches
+- **Progressive Refinement:** Coarse-to-fine strategies universally beneficial
+
+## Updated Research Positioning
+
+### Our Contributions in Literature Context
+
+#### 1. Architectural Transfer Analysis
+**Position:** First systematic evaluation of 3D INR architectures adapted to 2D matrix problems
+**Literature Gap:** Kim & Fridovich-Keil focused on general signals; we focus specifically on matrix structure
+**Novel Aspects:** Architectural design principles specialized for 2D domains
+
+#### 2. Theoretical Bridge Construction
+**Position:** Connecting neural optimization theory with matrix completion guarantees
+**Literature Gap:** Theory exists for each separately but not for their intersection
+**Novel Aspects:** Unified framework for understanding when neural approaches excel
+
+#### 3. Hybrid Method Innovation
+**Position:** Principled combination of explicit and implicit methods with automatic adaptation
+**Literature Gap:** Existing hybrids are domain-specific; we develop general principles
+**Novel Aspects:** Data-driven method selection and dynamic switching
+
+#### 4. Transfer Learning Framework
+**Position:** STRAINER-inspired transfer learning specifically for matrix domains
+**Literature Gap:** Transfer learning for INRs exists but not for matrix completion
+**Novel Aspects:** Cross-domain matrix completion with shared structural representations
+
+## Literature Summary (Updated)
+
+We have systematically analyzed **36 high-quality papers** from top-tier venues including recent advances from CVPR 2025, NeurIPS 2024, and SIGGRAPH 2023. This expanded analysis reveals:
+
+### Key Literature Findings
+
+1. **Explicit vs Implicit Boundary Conditions** are now well-characterized (Kim & Fridovich-Keil), providing clear decision criteria for method selection
+
+2. **Architectural Innovations** from 3D INRs (hash encoding, tensor factorization, multiscale representations) show strong potential for 2D matrix applications
+
+3. **Theoretical Connections** between neural optimization and matrix completion theory suggest unified optimization principles
+
+4. **Hybrid Approaches** represent the frontier, combining efficiency of explicit methods with expressiveness of implicit representations
+
+### Research Validation
+
+The literature strongly validates our research direction through multiple convergent lines of evidence:
+- **Kim & Fridovich-Keil** directly supports our hypothesis about explicit method advantages
+- **RegNeRF advances** provide tested regularization strategies for sparse reconstruction  
+- **Factor Fields framework** offers principled approach to factorization selection
+- **Transfer learning results** demonstrate significant quality improvements through architectural innovation
+
+**Critical Insight:** The field is moving toward **adaptive hybrid methods** that automatically select optimal representations based on data characteristics. Our matrix reconstruction focus positions us at this frontier with domain-specific optimizations.
 
