@@ -1,3 +1,5 @@
+
+
 # Datasets for 2D Matrix Reconstruction Research
 
 **Research Context**: Testing INR architectures (K-Planes vs NeRF vs Gaussian methods) on 2D matrix reconstruction tasks
@@ -114,3 +116,4 @@
 **Access Method**: `git lfs pull` after repository cloning
 **Documentation**: Complete specifications in `data/README.md`
 **Metadata**: Dataset catalog available in `data/dataset_catalog.json`
+
