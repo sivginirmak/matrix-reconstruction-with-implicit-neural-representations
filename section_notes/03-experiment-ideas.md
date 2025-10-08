@@ -25,13 +25,13 @@ Planar factorization methods with explicit geometric bias will achieve superior 
 #### Architecture Types
 
 1. **K-Planes Variants**
-   * Line features: \`f\_u \* f\_v\` (multiplicative)
-   * Line features: \`f\_u + f\_v\` (additive)
+   * Line features: `f_u * f_v` (multiplicative)
+   * Line features: `f_u + f_v` (additive)
    * With/without low-resolution plane features
 2. **GA-Planes Variants**
-   * \`MLP(f\_u \* f\_v + f\_uv)\` (multiplicative + plane)
-   * \`MLP(f\_u + f\_v + f\_uv)\` (additive + plane)
-   * \`MLP(concat(f\_u, f\_v, f\_uv))\` (concatenation)
+   * `MLP(f_u * f_v + f_uv)` (multiplicative + plane)
+   * `MLP(f_u + f_v + f_uv)` (additive + plane)
+   * `MLP(concat(f_u, f_v, f_uv))` (concatenation)
 3. **NeRF Variants**
    * ReLU activations (standard)
    * Sinusoidal activations (SIREN)
@@ -41,9 +41,9 @@ Planar factorization methods with explicit geometric bias will achieve superior 
 
 #### Decoder Architectures
 
-1. **Linear Decoder:** \`Linear(dim\_features → 1)\`
-2. **Nonconvex MLP:** \`Linear(dim\_features → m) → ReLU → Linear(m → 1)\`
-3. **Convex MLP:** \`Linear(dim\_features → m) \* (Linear(dim\_features → m) > 0)\`
+1. **Linear Decoder:** `Linear(dim_features → 1)`
+2. **Nonconvex MLP:** `Linear(dim_features → m) → ReLU → Linear(m → 1)`
+3. **Convex MLP:** `Linear(dim_features → m) * (Linear(dim_features → m) > 0)`
 
 #### Optimization Strategies
 
@@ -90,9 +90,9 @@ Planar factorization methods with explicit geometric bias will achieve superior 
    * Establish parameter efficiency benchmarks
 2. **Architecture Sweep**
    * Test all architecture combinations systematically
-   * Use grid search over resolution parameters: \`\[32, 64, 128, 192, 256]\`
-   * Test feature dimensions: \`\[32, 64, 128]\`
-   * Test hidden dimensions: \`\[32, 64, 128, 256]\`
+   * Use grid search over resolution parameters: `[32, 64, 128, 192, 256]`
+   * Test feature dimensions: `[32, 64, 128]`
+   * Test hidden dimensions: `[32, 64, 128, 256]`
 3. **Controlled Comparison**
    * Fixed training protocol: 1000 epochs, Adam optimizer
    * Learning rates optimized per architecture type
@@ -108,7 +108,7 @@ Planar factorization methods with explicit geometric bias will achieve superior 
 
 **B. Operation Type Ablation**
 
-* Compare multiplicative (\`f\_u \* f\_v\`) vs. additive (\`f\_u + f\_v\`) operations
+* Compare multiplicative (`f_u * f_v`) vs. additive (`f_u + f_v`) operations
 * Analyze geometric bias implications
 
 **C. Quantization Impact Study**
@@ -143,7 +143,7 @@ Planar factorization methods with explicit geometric bias will achieve superior 
 #### Statistical Validity
 
 * **Threat:** Insufficient sample size
-* **Mitigation:** Multiple runs with different seeds (n\=5)
+* **Mitigation:** Multiple runs with different seeds (n=5)
 * **Threat:** Multiple testing problem
 * **Mitigation:** Bonferroni correction for hypothesis testing
 
@@ -164,36 +164,36 @@ Planar factorization methods with explicit geometric bias will achieve superior 
 * **GPU:** NVIDIA GPU with 8GB+ VRAM (RTX 3070 or equivalent)
 * **Memory:** 16GB+ RAM
 * **Storage:** 50GB+ for datasets and model checkpoints
-* **Compute Time:** \~20-30 hours for complete experimental suite
+* **Compute Time:** ~20-30 hours for complete experimental suite
 
 #### Code Structure
 
-\`\`\`python
+```python
 
-# Based on experiments/some\_examples.py architecture
+# Based on experiments/some_examples.py architecture
 
 class ExperimentRunner:
 def **init**(self, config):
-self.config \= config
+self.config = config
 
-def run\_architecture\_comparison(self):
+def run_architecture_comparison(self):
 
 # Phase 1: Systematic comparison
 
 pass
 
-def run\_ablation\_studies(self):
+def run_ablation_studies(self):
 
 # Phase 2: Component analysis
 
 pass
 
-def run\_optimization\_study(self):
+def run_optimization_study(self):
 
 # Phase 3: Domain-specific optimization
 
 pass
-\`\`\`
+```
 
 ### Expected Outcomes and Impact
 
