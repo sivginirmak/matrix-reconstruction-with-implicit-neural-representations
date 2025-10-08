@@ -1,3 +1,5 @@
+# Research Concept & Direction: Comparative Analysis of INR Architectures for 2D Matrix Reconstruction
+
 ## Research Question
 
 This research investigates a fundamental question about the representational efficiency of Implicit Neural Representations (INRs) when applied to 2D matrix reconstruction tasks. While INRs like NeRF, K-Planes, and Gaussian-based methods have been predominantly designed and evaluated for 3D scene representation, their architectural principles may offer significant advantages when adapted for 2D matrix fitting problems.
