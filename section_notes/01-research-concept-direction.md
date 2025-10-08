@@ -1,5 +1,3 @@
-# Research Concept & Direction: Comparative Analysis of INR Architectures for 2D Matrix Reconstruction
-
 ## Research Question
 
 This research investigates a fundamental question about the representational efficiency of Implicit Neural Representations (INRs) when applied to 2D matrix reconstruction tasks. While INRs like NeRF, K-Planes, and Gaussian-based methods have been predominantly designed and evaluated for 3D scene representation, their architectural principles may offer significant advantages when adapted for 2D matrix fitting problems.
@@ -45,9 +43,9 @@ Proving this hypothesis will reshape the field by:
 **Phase 1: Architecture Comparison**
 
 * Systematic evaluation of K-Planes vs. GA-Planes (geometric algebra planes) vs. NeRF (with ReLU vs sinusoidal activations (siren)) vs. Gaussian-splats on standardized 2D reconstruction tasks
-* K-planes with MLP decoder  in 2D is like: MLP(f\_u\*f\_v) where f\_u, f\_v are line features. GA-planes: MLP(f\_u (times or concat or add) f\_v (add or concat) f\_uv) where f\_uv is low-res plane feature (all features are upsampled by interpolation)
+* K-planes with MLP decoder  in 2D is like: MLP(f_u*f_v) where f_u, f_v are line features. GA-planes: MLP(f_u (times or concat or add) f_v (add or concat) f_uv) where f_uv is low-res plane feature (all features are upsampled by interpolation)
 * comparison of convex vs nonconvex MLPs
-* addition of quantization: MLP(quant(f\_u)...) -- try doing QAT
+* addition of quantization: MLP(quant(f_u)...) -- try doing QAT
 * with/without interpolation: can compare MLP(U@V) vs SVD fitting U@V in the no interpolation case
 * Controlled comparison with identical training protocols and evaluation metrics #you can break these up
 
